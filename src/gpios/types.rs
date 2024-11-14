@@ -115,3 +115,31 @@ impl From<GpioMode> for u8 {
         gpio_mode as u8
     }
 }
+
+/// GPIO input status
+#[derive(Copy, Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum GpioStatus {
+    Low = 0,
+    High = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for GpioStatus {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Low),
+            1 => Ok(Self::High),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<GpioStatus> for u8 {
+    fn from(gpio_status: GpioStatus) -> Self {
+        gpio_status as u8
+    }
+}
