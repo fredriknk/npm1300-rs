@@ -1,9 +1,14 @@
 use crate::{
-    types::{BuckVoltage, Gpio, GpioMode, GpioPolarity},
+    gpios::{Gpio, GpioMode, GpioPolarity},
     Buck1Autoctrlsel, Buck1Enpulldown, Buck1Swctrlsel, Buck2Autoctrlsel, Buck2Enpulldown,
     Buck2Swctrlsel, Buckstatus, Buckvoutstatus, Taskbuckenaclr, Taskbuckenaset, Taskbuckpwmclr,
     Taskbuckpwmset,
 };
+
+mod types;
+
+// Re-export everything in types.rs
+pub use types::*;
 
 /// Convert a GPIO enum value to its register index
 ///

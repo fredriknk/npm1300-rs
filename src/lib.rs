@@ -3,7 +3,7 @@
 use device_driver::AsyncRegisterInterface;
 
 pub mod buck;
-pub mod types;
+pub mod gpios;
 
 const ADDR: u8 = 0x6B;
 

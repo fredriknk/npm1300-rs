@@ -20,7 +20,8 @@ use embassy_time::Timer;
 use {defmt_rtt as _, panic_probe as _};
 
 use npm1300_rs::{
-    types::{BuckVoltage, Gpio, GpioPolarity},
+    buck::BuckVoltage,
+    gpios::{Gpio, GpioPolarity},
     NPM1300,
 };
 

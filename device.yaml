@@ -108,7 +108,7 @@ BUCK:
           base: uint
           start: 0
           end: 8
-          try_conversion: crate::types::BuckVoltage
+          try_conversion: crate::buck::BuckVoltage
     BUCK1RETVOUT:
       type: register
       description: BUCK1 output voltage retention mode
@@ -120,7 +120,7 @@ BUCK:
           base: uint
           start: 0
           end: 8
-          try_conversion: crate::types::BuckVoltage
+          try_conversion: crate::buck::BuckVoltage
     BUCK2NORMVOUT:
       type: register
       description: BUCK2 output voltage normal mode
@@ -132,7 +132,7 @@ BUCK:
           base: uint
           start: 0
           end: 8
-          try_conversion: crate::types::BuckVoltage
+          try_conversion: crate::buck::BuckVoltage
     BUCK2RETVOUT:
       type: register
       description: BUCK2 output voltage retention mode
@@ -144,7 +144,7 @@ BUCK:
           base: uint
           start: 0
           end: 8
-          try_conversion: crate::types::BuckVoltage
+          try_conversion: crate::buck::BuckVoltage
     BUCKENCTRL:
       type: register
       description: BUCK Enable GPIO Select
@@ -157,25 +157,25 @@ BUCK:
           start: 0
           end: 3
           description: Select which GPI controls BUCK1_enable
-          try_conversion: crate::types::Gpio
+          try_conversion: crate::gpios::Gpio
         BUCK2ENGPISEL:
           base: uint
           start: 3
           end: 6
           description: Select which GPI controls BUCK2_enable
-          try_conversion: crate::types::Gpio
+          try_conversion: crate::gpios::Gpio
         BUCK1ENGPIINV:
           base: uint
           start: 6
           end: 7
           description: Invert the sense of the selected GPIO
-          try_conversion: crate::types::GpioPolarity
+          try_conversion: crate::gpios::GpioPolarity
         BUCK2ENGPIINV:
           base: uint
           start: 7
           end: 8
           description: Invert the sense of the selected GPIO
-          try_conversion: crate::types::GpioPolarity
+          try_conversion: crate::gpios::GpioPolarity
     BUCKVRETCTRL:
       type: register
       description: BUCK Retention Voltage select
@@ -188,25 +188,25 @@ BUCK:
           start: 0
           end: 3
           description: Select which GPI controls BUCK1_retention voltage sel
-          try_conversion: crate::types::Gpio
+          try_conversion: crate::gpios::Gpio
         BUCK2VRETGPISEL:
           base: uint
           start: 3
           end: 6
           description: Select which GPI controls BUCK2_retention voltage sel
-          try_conversion: crate::types::Gpio
+          try_conversion: crate::gpios::Gpio
         BUCK1VRETGPIINV:
           base: uint
           start: 6
           end: 7
           description: Invert the sense of the selected GPIO
-          try_conversion: crate::types::GpioPolarity
+          try_conversion: crate::gpios::GpioPolarity
         BUCK2VRETGPIINV:
           base: uint
           start: 7
           end: 8
           description: Invert the sense of the selected GPIO
-          try_conversion: crate::types::GpioPolarity
+          try_conversion: crate::gpios::GpioPolarity
     BUCKPWMCTRL:
       type: register
       description: BUCK Forced PWM mode GPIO select
@@ -219,25 +219,25 @@ BUCK:
           start: 0
           end: 3
           description: Select which GPI controls BUCK1 force PWM
-          try_conversion: crate::types::Gpio
+          try_conversion: crate::gpios::Gpio
         BUCK2PWMGPISEL:
           base: uint
           start: 3
           end: 6
           description: Select which GPI controls BUCK2 force PWM
-          try_conversion: crate::types::Gpio
+          try_conversion: crate::gpios::Gpio
         BUCK1PWMGPIINV:
           base: uint
           start: 6
           end: 7
           description: Invert the sense of the selected GPIO
-          try_conversion: crate::types::GpioPolarity
+          try_conversion: crate::gpios::GpioPolarity
         BUCK2PWMGPIINV:
           base: uint
           start: 7
           end: 8
           description: Invert the sense of the selected GPIO
-          try_conversion: crate::types::GpioPolarity
+          try_conversion: crate::gpios::GpioPolarity
     BUCKSWCTRLSEL:
       type: register
       description: BUCK software control select
@@ -288,7 +288,7 @@ BUCK:
           end: 5
           description: Buck output voltage (set by FSM)
           access: ReadOnly
-          try_conversion: crate::types::BuckVoltage
+          try_conversion: crate::buck::BuckVoltage
     BUCKCTRL0:
       type: register
       description: BUCK auto PFM to PWM control select
@@ -467,4 +467,4 @@ GPIOS:
           start: 0
           end: 4
           description: Config for GPIO mode selection
-          try_conversion: crate::types::GpioMode
+          try_conversion: crate::gpios::GpioMode
