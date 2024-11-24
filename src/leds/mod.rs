@@ -1,3 +1,5 @@
+use crate::common::Task;
+
 mod types;
 
 // Re-export everything in types.rs
@@ -63,7 +65,7 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
         self.device
             .leddrv()
             .leddrvset(0)
-            .dispatch_async(|command| command.set_leddrvset(LedDrvOn::Set))
+            .dispatch_async(|command| command.set_leddrvset(Task::Trigger))
             .await
     }
 
@@ -74,7 +76,7 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
         self.device
             .leddrv()
             .leddrvclr(0)
-            .dispatch_async(|command| command.set_leddrvclr(LedDrvOff::Clear))
+            .dispatch_async(|command| command.set_leddrvclr(Task::Trigger))
             .await
     }
 
@@ -85,7 +87,7 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
         self.device
             .leddrv()
             .leddrvset(1)
-            .dispatch_async(|command| command.set_leddrvset(LedDrvOn::Set))
+            .dispatch_async(|command| command.set_leddrvset(Task::Trigger))
             .await
     }
 
@@ -96,7 +98,7 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
         self.device
             .leddrv()
             .leddrvclr(1)
-            .dispatch_async(|command| command.set_leddrvclr(LedDrvOff::Clear))
+            .dispatch_async(|command| command.set_leddrvclr(Task::Trigger))
             .await
     }
 
@@ -107,7 +109,7 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
         self.device
             .leddrv()
             .leddrvset(2)
-            .dispatch_async(|command| command.set_leddrvset(LedDrvOn::Set))
+            .dispatch_async(|command| command.set_leddrvset(Task::Trigger))
             .await
     }
 
@@ -118,7 +120,7 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
         self.device
             .leddrv()
             .leddrvclr(2)
-            .dispatch_async(|command| command.set_leddrvclr(LedDrvOff::Clear))
+            .dispatch_async(|command| command.set_leddrvclr(Task::Trigger))
             .await
     }
 }

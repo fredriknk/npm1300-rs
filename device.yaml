@@ -23,14 +23,7 @@ BUCK:
           start: 0
           end: 1
           description: Request to enable BUCK
-          conversion:
-            name: TASKBUCKENASET
-            NOEFFECT:
-              value: 0
-              description: No effect
-            SET:
-              value: 1
-              description: BUCK enable request set
+          try_conversion: crate::common::Task
     BUCKENACLR:
       type: command
       description: BUCK disable pulse
@@ -45,14 +38,7 @@ BUCK:
           start: 0
           end: 1
           description: Request to disable BUCK
-          conversion:
-            name: TASKBUCKENACLR
-            NOEFFECT:
-              value: 0
-              description: No effect
-            SET:
-              value: 1
-              description: BUCK enable request clear
+          try_conversion: crate::common::Task
     BUCKPWMSET:
       type: command
       description: BUCK PWM mode enable pulse
@@ -67,14 +53,7 @@ BUCK:
           start: 0
           end: 1
           description: Request for BUCK to enter forced PWM mode
-          conversion:
-            name: TASKBUCKPWMSET
-            NOEFFECT:
-              value: 0
-              description: No effect
-            SET:
-              value: 1
-              description: BUCK forced PWM request
+          try_conversion: crate::common::Task
     BUCKPWMCLR:
       type: command
       description: BUCK PWM mode disable pulse
@@ -89,14 +68,7 @@ BUCK:
           start: 0
           end: 1
           description: Request for BUCK to leave forced PWM mode and return to auto mode
-          conversion:
-            name: TASKBUCKPWMCLR
-            NOEFFECT:
-              value: 0
-              description: No effect
-            SET:
-              value: 1
-              description: BUCK auto mode request
+          try_conversion: crate::common::Task
     BUCK1NORMVOUT:
       type: register
       description: BUCK1 output voltage normal mode
@@ -482,7 +454,7 @@ LEDDRV:
           start: 0
           end: 1
           description: Request to turn on LED
-          try_conversion: crate::leds::LedDrvOn
+          try_conversion: crate::common::Task
     LEDDRVCLR:
       type: command
       description: Turn off LED
@@ -497,7 +469,7 @@ LEDDRV:
           start: 0
           end: 1
           description: Request to turn off LED
-          try_conversion: crate::leds::LedDrvOff
+          try_conversion: crate::common::Task
 
 GPIOS:
   type: block

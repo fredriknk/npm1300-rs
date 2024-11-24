@@ -1,8 +1,8 @@
 use crate::{
+    common::Task,
     gpios::{Gpio, GpioMode, GpioPolarity},
     Buck1Autoctrlsel, Buck1Enpulldown, Buck1Swctrlsel, Buck2Autoctrlsel, Buck2Enpulldown,
-    Buck2Swctrlsel, Buckstatus, Buckvoutstatus, Taskbuckenaclr, Taskbuckenaset, Taskbuckpwmclr,
-    Taskbuckpwmset,
+    Buck2Swctrlsel, Buckstatus, Buckvoutstatus,
 };
 
 mod types;
@@ -51,14 +51,14 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
             self.device
                 .buck()
                 .buckenaset(buck_index.into())
-                .dispatch_async(|command| command.set_taskbuckenaset(Taskbuckenaset::Set))
+                .dispatch_async(|command| command.set_taskbuckenaset(Task::Trigger))
                 .await
         } else {
             // Disable the regulator
             self.device
                 .buck()
                 .buckenaclr(buck_index.into())
-                .dispatch_async(|command| command.set_taskbuckenaclr(Taskbuckenaclr::Set))
+                .dispatch_async(|command| command.set_taskbuckenaclr(Task::Trigger))
                 .await
         }
     }
@@ -99,14 +99,14 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
             self.device
                 .buck()
                 .buckpwmset(buck_index.into())
-                .dispatch_async(|command| command.set_taskbuckpwmset(Taskbuckpwmset::Set))
+                .dispatch_async(|command| command.set_taskbuckpwmset(Task::Trigger))
                 .await
         } else {
             // Disable forced PWM mode
             self.device
                 .buck()
                 .buckpwmclr(buck_index.into())
-                .dispatch_async(|command| command.set_taskbuckpwmclr(Taskbuckpwmclr::Set))
+                .dispatch_async(|command| command.set_taskbuckpwmclr(Task::Trigger))
                 .await
         }
     }
