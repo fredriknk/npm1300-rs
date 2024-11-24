@@ -21,7 +21,7 @@ This crate provides both low-level register access and a high-level API for mana
 | CHARGER — Battery charger                 |        ❌         |         ❌         |
 | BUCK — Buck regulators                    |        ✅         |         ✅         |
 | LOADSW/LDO — Load switches/LDO regulators |        ❌         |         ❌         |
-| LEDDRV — LED drivers                      |        ✅         |         ❌         |
+| LEDDRV — LED drivers                      |        ✅         |         ✅         |
 | GPIO — General-purpose I/O                |        ✅         |         ✅         |
 | System Monitor                            |        ❌         |         ❌         |
 | TIMER — Timer/monitor                     |        ❌         |         ❌         |
