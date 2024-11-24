@@ -447,6 +447,58 @@ BUCK:
               value: 1
               description: PWM mode enabled
 
+LEDDRV:
+  type: block
+  description: LEDDRV registers
+  address_offset: 0x0A00
+  objects:
+    LEDDRVMODESEL:
+      type: register
+      description: LED Mode Configuration
+      address: 0x00
+      repeat:
+        count: 3
+        stride: 1
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        LEDDRVMODESEL:
+          base: uint
+          start: 0
+          end: 2
+          description: LED mode configuration
+          try_conversion: crate::leds::LedMode
+    LEDDRVSET:
+      type: command
+      description: Turn on LED
+      address: 0x03
+      repeat:
+        count: 3
+        stride: 2
+      size_bits_in: 1
+      fields_in:
+        LEDDRVSET:
+          base: uint
+          start: 0
+          end: 1
+          description: Request to turn on LED
+          try_conversion: crate::leds::LedDrvOn
+    LEDDRVCLR:
+      type: command
+      description: Turn off LED
+      address: 0x04
+      size_bits_in: 1
+      repeat:
+        count: 3
+        stride: 2
+      fields_in:
+        LEDDRVCLR:
+          base: uint
+          start: 0
+          end: 1
+          description: Request to turn off LED
+          try_conversion: crate::leds::LedDrvOff
+
 GPIOS:
   type: block
   description: GPIOs registers
