@@ -2,12 +2,6 @@
 #![no_main]
 
 //! Example demonstrating control of the NPM1300 PMIC's BUCK2 voltage regulator
-//!
-//! This example shows how to:
-//! - Initialize I2C communication with the NPM1300
-//! - Enable BUCK2 regulator
-//! - Set BUCK2 output voltage
-//! - Disable BUCK2 after a delay
 
 use embassy_executor::Spawner;
 use embassy_nrf::{
@@ -94,8 +88,8 @@ async fn main(_spawner: Spawner) {
     defmt::info!("Enabling PMIC GPIO1...");
     pmic_gpio1.set_high();
 
-    // defmt::info!("Disabling buck 2...");
-    // let _ = npm1300.disable_buck2().await;
+    defmt::info!("Disabling buck 2...");
+    let _ = npm1300.disable_buck2().await;
 
     loop {
         Timer::after_millis(1000).await;
