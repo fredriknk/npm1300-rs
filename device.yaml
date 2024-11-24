@@ -483,14 +483,7 @@ GPIOS:
           start: 0
           end: 1
           description: Config for GPIO drive strength
-          conversion:
-            name: GPIODRIVESTRENGTH
-            DRIVE_1MA:
-              value: default
-              description: 1mA drive strength
-            DRIVE_6MA:
-              value: 1
-              description: 6mA drive strength
+          try_conversion: crate::gpios::GpioDriveStrength
     GPIOPUEN:
       type: register
       description: GPIO pull-up enable configuration
@@ -506,14 +499,7 @@ GPIOS:
           start: 0
           end: 1
           description: Config for GPIO pull-up enable
-          conversion:
-            name: GPIOPUENABLE
-            PULLUP0:
-              value: default
-              description: Pull-up disable
-            PULLUP1:
-              value: 1
-              description: Pull-up enable
+          try_conversion: crate::gpios::GpioPullUp
     GPIOPDEN:
       type: register
       description: GPIO pull-down enable configuration
@@ -529,14 +515,7 @@ GPIOS:
           start: 0
           end: 1
           description: Config for GPIO pull-down enable
-          conversion:
-            name: GPIOPDENABLE
-            PULLDOWN0:
-              value: default
-              description: Pull-down disable
-            PULLDOWN1:
-              value: 1
-              description: Pull-down enable
+          try_conversion: crate::gpios::GpioPullDown
     GPIOOPENDRAIN:
       type: register
       description: GPIO open drain configuration
@@ -552,14 +531,7 @@ GPIOS:
           start: 0
           end: 1
           description: Config for GPIO open drain
-          conversion:
-            name: GPIOOPENDRAINCONFIG
-            OPENDRAIN0:
-              value: default
-              description: Open drain disable
-            OPENDRAIN1:
-              value: 1
-              description: Open drain enable
+          try_conversion: crate::gpios::GpioOpenDrain
     GPIODEBOUNCE:
       type: register
       description: GPIO debounce configuration
@@ -575,14 +547,7 @@ GPIOS:
           start: 0
           end: 1
           description: Config for GPIO debounce
-          conversion:
-            name: GPIODEBOUNCECONFIG
-            DEBOUNCE0:
-              value: default
-              description: Debounce disable
-            DEBOUNCE1:
-              value: 1
-              description: Debounce enable
+          try_conversion: crate::gpios::GpioDebounce
     GPIOSTATUS:
       type: register
       description: GPIO Status from GPIO Pads

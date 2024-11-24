@@ -116,8 +116,141 @@ impl From<GpioMode> for u8 {
     }
 }
 
+/// GPIO Drive Strength Configuration
+#[derive(Debug, Clone, Copy)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum GpioDriveStrength {
+    /// 1mA
+    Drive1mA = 0,
+    /// 6mA
+    Drive6mA = 1,
+}
+
+impl TryFrom<u8> for GpioDriveStrength {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Drive1mA),
+            1 => Ok(Self::Drive6mA),
+            _ => Err(()),
+        }
+    }
+}
+
+impl From<GpioDriveStrength> for u8 {
+    fn from(gpio_drive_strength: GpioDriveStrength) -> Self {
+        gpio_drive_strength as u8
+    }
+}
+
+/// GPIO Pull-up Configuration
+#[derive(Debug, Clone, Copy)]
+#[repr(u8)]
+pub enum GpioPullUp {
+    Disable = 0,
+    Enable = 1,
+}
+
+impl TryFrom<u8> for GpioPullUp {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Disable),
+            1 => Ok(Self::Enable),
+            _ => Err(()),
+        }
+    }
+}
+
+impl From<GpioPullUp> for u8 {
+    fn from(gpio_pull_up: GpioPullUp) -> Self {
+        gpio_pull_up as u8
+    }
+}
+
+/// GPIO Pull-down Configuration
+#[derive(Debug, Clone, Copy)]
+#[repr(u8)]
+pub enum GpioPullDown {
+    Disable = 0,
+    Enable = 1,
+}
+
+impl TryFrom<u8> for GpioPullDown {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Disable),
+            1 => Ok(Self::Enable),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion from u8
+impl From<GpioPullDown> for u8 {
+    fn from(gpio_pull_down: GpioPullDown) -> Self {
+        gpio_pull_down as u8
+    }
+}
+
+/// GPIO Open Drain Configuration
+#[derive(Debug, Clone, Copy)]
+#[repr(u8)]
+pub enum GpioOpenDrain {
+    Disable = 0,
+    Enable = 1,
+}
+
+impl TryFrom<u8> for GpioOpenDrain {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Disable),
+            1 => Ok(Self::Enable),
+            _ => Err(()),
+        }
+    }
+}
+
+impl From<GpioOpenDrain> for u8 {
+    fn from(gpio_open_drain: GpioOpenDrain) -> Self {
+        gpio_open_drain as u8
+    }
+}
+
+/// GPIO Debounce Configuration
+#[derive(Debug, Clone, Copy)]
+#[repr(u8)]
+pub enum GpioDebounce {
+    Disable = 0,
+    Enable = 1,
+}
+
+impl TryFrom<u8> for GpioDebounce {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Disable),
+            1 => Ok(Self::Enable),
+            _ => Err(()),
+        }
+    }
+}
+
+impl From<GpioDebounce> for u8 {
+    fn from(gpio_debounce: GpioDebounce) -> Self {
+        gpio_debounce as u8
+    }
+}
+
 /// GPIO input status
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum GpioStatus {
     Low = 0,
