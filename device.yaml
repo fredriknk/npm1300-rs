@@ -16,7 +16,7 @@ BUCK:
       repeat:
         count: 2
         stride: 2
-      size_bits_in: 8
+      size_bits_in: 1
       fields_in:
         TASKBUCKENASET:
           base: uint
@@ -35,7 +35,7 @@ BUCK:
       type: command
       description: BUCK disable pulse
       address: 0x01
-      size_bits_in: 8
+      size_bits_in: 1
       repeat:
         count: 2
         stride: 2
@@ -60,7 +60,7 @@ BUCK:
       repeat:
         count: 2
         stride: 2
-      size_bits_in: 8
+      size_bits_in: 1
       fields_in:
         TASKBUCKPWMSET:
           base: uint
@@ -82,7 +82,7 @@ BUCK:
       repeat:
         count: 2
         stride: 2
-      size_bits_in: 8
+      size_bits_in: 1
       fields_in:
         TASKBUCKPWMCLR:
           base: uint
