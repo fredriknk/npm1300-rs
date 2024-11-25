@@ -1,0 +1,499 @@
+/// Main charger enable control set
+///
+/// This W1S (Write-1-to-Set) register controls the primary enable/disable
+/// state of the battery charging system.
+///
+/// # Write behavior
+/// - Writing 1: Enables the battery charger
+/// - Writing 0: No effect on current state
+///
+/// # Read behavior
+/// Returns current charger enable state:
+/// - 0: Battery charging is disabled
+/// - 1: Battery charging is enabled
+///
+/// # Register type
+/// W1S (Write-1-to-Set): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum ChargerEnableSet {
+    /// No effect
+    NoEffect = 0,
+    /// Charger is enabled
+    EnableCharger = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for ChargerEnableSet {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::EnableCharger),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerEnableSet> for u8 {
+    fn from(charger_enable_set: ChargerEnableSet) -> Self {
+        charger_enable_set as u8
+    }
+}
+
+/// Sets maximum charge current in cool temperature conditions
+///
+/// This W1S (Write-1-to-Set) register enables full charging capacity
+/// when battery temperature is in the cool range.
+///
+/// # Write behavior
+/// - Writing 1: Enables 100% charge current as defined by BCHGISETMSB:BCHGISETLSB
+/// - Writing 0: No effect on current state
+///
+/// # Read behavior
+/// Returns current charge current limit setting:
+/// - 0: Cool temperature charging limited to 50% of BCHGISETMSB:BCHGISETLSB
+/// - 1: Cool temperature charging allowed at 100% of BCHGISETMSB:BCHGISETLSB
+///
+/// # Register type
+/// W1S (Write-1-to-Set): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum ChargerEnableFullCurrentChargeInCoolTempSet {
+    /// No effect
+    NoEffect = 0,
+    /// Enable charging at full current when battery temperature is in the cool range
+    EnableFullCurrentChargeInCoolTemp = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for ChargerEnableFullCurrentChargeInCoolTempSet {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::EnableFullCurrentChargeInCoolTemp),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerEnableFullCurrentChargeInCoolTempSet> for u8 {
+    fn from(
+        charger_enable_full_current_charge_in_cool_temp_set: ChargerEnableFullCurrentChargeInCoolTempSet,
+    ) -> Self {
+        charger_enable_full_current_charge_in_cool_temp_set as u8
+    }
+}
+
+/// Main charger enable control clear
+///
+/// This W1C (Write-1-to-Clear) register controls the primary enable/disable
+/// state of the battery charging system.
+///
+/// # Write behavior
+/// - Writing 1: No effect on current state
+/// - Writing 0: Disables the battery charger
+///
+/// # Read behavior
+/// Returns current charger enable state:
+/// - 0: Battery charging is disabled
+/// - 1: Battery charging is enabled
+///
+/// # Register type
+/// W1C (Write-1-to-Clear): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum ChargerEnableClear {
+    /// No effect
+    NoEffect = 0,
+    /// Charger is disabled
+    DisableCharger = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for ChargerEnableClear {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::DisableCharger),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerEnableClear> for u8 {
+    fn from(charger_enable_clear: ChargerEnableClear) -> Self {
+        charger_enable_clear as u8
+    }
+}
+
+/// Clears maximum charge current in cool temperature conditions
+///
+/// This W1C (Write-1-to-Clear) register enables full charging capacity
+/// when battery temperature is in the cool range.
+///
+/// # Write behavior
+/// - Writing 1: No effect on current state
+/// - Writing 0: Disables the battery charger
+///
+/// # Read behavior
+/// Returns current charge current limit setting:
+/// - 0: Cool temperature charging limited to 50% of BCHGISETMSB:BCHGISETLSB
+/// - 1: Cool temperature charging allowed at 100% of BCHGISETMSB:BCHGISETLSB
+///
+/// # Register type
+/// W1C (Write-1-to-Clear): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum ChargerEnableFullCurrentChargeInCoolTempClear {
+    /// No effect
+    NoEffect = 0,
+    /// Disable charging at full current when battery temperature is in the cool range
+    DisableFullCurrentChargeInCoolTemp = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for ChargerEnableFullCurrentChargeInCoolTempClear {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::DisableFullCurrentChargeInCoolTemp),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerEnableFullCurrentChargeInCoolTempClear> for u8 {
+    fn from(
+        charger_enable_full_current_charge_in_cool_temp_clear: ChargerEnableFullCurrentChargeInCoolTempClear,
+    ) -> Self {
+        charger_enable_full_current_charge_in_cool_temp_clear as u8
+    }
+}
+
+/// Battery charger disable recharge set
+///
+/// This W1S (Write-1-to-Set) register controls the primary enable/disable
+/// state of the battery charging system.
+///
+/// # Write behavior
+/// - Writing 0: No effect on current state
+/// - Writing 1: Disable Recharging of battery once charged
+///
+/// # Read behavior
+/// Returns current charger disable recharge state:
+/// - 0: Battery recharge is enabled
+/// - 1: Battery recharge is disabled
+///
+/// # Register type
+/// W1S (Write-1-to-Set): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum ChargerDisableRechargeSet {
+    /// No effect
+    NoEffect = 0,
+    /// Disable charger
+    DisableRecharge = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for ChargerDisableRechargeSet {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::DisableRecharge),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerDisableRechargeSet> for u8 {
+    fn from(charger_disable_recharge_set: ChargerDisableRechargeSet) -> Self {
+        charger_disable_recharge_set as u8
+    }
+}
+
+/// Battery Charger ignore NTC thermistor temperature limits set
+///
+/// This W1S (Write-1-to-Set) register controls the primary enable/disable
+/// state of the battery charging system.
+///
+/// # Write behavior
+/// - Writing 0: No effect
+/// - Writing 1: Charging ignores NTC thermistor temperature limits
+///
+/// # Read behavior
+/// Returns current charger disable recharge state:
+/// - 0: NTC thermistor temperature limits are not ignored
+/// - 1: NTC thermistor temperature limits are ignored
+///
+/// # Register type
+/// W1S (Write-1-to-Set): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum DisableNtcSet {
+    /// No effect
+    NoEffect = 0,
+    /// Charging ignore NTC thermistor temperature limits
+    IgnoreNtc = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for DisableNtcSet {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::IgnoreNtc),
+            _ => Err(()),
+        }
+    }
+}
+// Add conversion to u8
+impl From<DisableNtcSet> for u8 {
+    fn from(disable_ntc_set: DisableNtcSet) -> Self {
+        disable_ntc_set as u8
+    }
+}
+
+/// Battery charger disable recharge clear
+///
+/// This W1C (Write-1-to-Clear) register controls the primary enable/disable
+/// state of the battery charging system.
+///
+/// # Write behavior
+/// - Writing 0: No effect on current state
+/// - Writing 1: Enable Recharging of battery once charged
+///
+/// # Read behavior
+/// Returns current charger disable recharge state:
+/// - 0: Battery recharge is enabled
+/// - 1: Battery recharge is disabled
+///
+/// # Register type
+/// W1C (Write-1-to-Clear): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum ChargerDisableRechargeClear {
+    /// No effect
+    NoEffect = 0,
+    /// Disable charger
+    EnableRecharge = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for ChargerDisableRechargeClear {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::EnableRecharge),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerDisableRechargeClear> for u8 {
+    fn from(charger_disable_recharge_clear: ChargerDisableRechargeClear) -> Self {
+        charger_disable_recharge_clear as u8
+    }
+}
+
+/// Battery Charger ignore NTC thermistor temperature limits clear
+///
+/// This W1C (Write-1-to-Clear) register controls the primary enable/disable
+/// state of the battery charging system.
+///
+/// # Write behavior
+/// - Writing 0: No effect
+/// - Writing 1: Charging uses NTC thermistor temperature limits
+///
+/// # Read behavior
+/// Returns current charger disable recharge state:
+/// - 0: NTC thermistor temperature limits are not ignored
+/// - 1: NTC thermistor temperature limits are ignored
+///
+/// # Register type
+/// W1C (Write-1-to-Clear): Writing 1 sets the bit, writing 0 has no effect.
+/// Reading returns current state.
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub enum DisableNtcClear {
+    /// No effect
+    NoEffect = 0,
+    /// Charging uses NTC thermistor temperature limits
+    UseNtc = 1,
+}
+
+// Add conversion from u8
+impl TryFrom<u8> for DisableNtcClear {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NoEffect),
+            1 => Ok(Self::UseNtc),
+            _ => Err(()),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<DisableNtcClear> for u8 {
+    fn from(disable_ntc_clear: DisableNtcClear) -> Self {
+        disable_ntc_clear as u8
+    }
+}
+
+/// Battery charger termination voltages in normal temperature
+#[derive(Copy, Clone, Debug)]
+pub enum ChargerTerminationVoltage {
+    V3_50 = 0,
+    V3_55 = 1,
+    V3_60 = 2,
+    V3_65 = 3,
+    V4_00 = 4,
+    V4_05 = 5,
+    V4_10 = 6,
+    V4_15 = 7,
+    V4_20 = 8,
+    V4_25 = 9,
+    V4_30 = 10,
+    V4_35 = 11,
+    V4_40 = 12,
+    V4_45 = 13,
+}
+
+// Add conversion from u8
+impl From<u8> for ChargerTerminationVoltage {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => Self::V3_50,
+            1 => Self::V3_55,
+            2 => Self::V3_60,
+            3 => Self::V3_65,
+            4 => Self::V4_00,
+            5 => Self::V4_05,
+            6 => Self::V4_10,
+            7 => Self::V4_15,
+            8 => Self::V4_20,
+            9 => Self::V4_25,
+            10 => Self::V4_30,
+            11 => Self::V4_35,
+            12 => Self::V4_40,
+            13 => Self::V4_45,
+            _ => panic!("Invalid value"),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerTerminationVoltage> for u8 {
+    fn from(value: ChargerTerminationVoltage) -> Self {
+        value as u8
+    }
+}
+
+/// Battery charger trickle level select
+#[derive(Copy, Clone, Debug)]
+pub enum ChargerTrickleLevelSelect {
+    V2_9 = 0,
+    V2_5 = 1,
+}
+
+// Add conversion from u8
+impl From<u8> for ChargerTrickleLevelSelect {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => Self::V2_9,
+            1 => Self::V2_5,
+            _ => panic!("Invalid value"),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerTrickleLevelSelect> for u8 {
+    fn from(value: ChargerTrickleLevelSelect) -> Self {
+        value as u8
+    }
+}
+
+/// Battery charger termination current level select
+/// Expressed as a percentage of the charging current
+#[derive(Copy, Clone, Debug)]
+pub enum ChargerTerminationCurrentLevelSelect {
+    /// 10% of charging current
+    SEL10 = 0,
+    /// 20% of charging current
+    SEL20 = 1,
+}
+
+// Add conversion to u8
+impl From<ChargerTerminationCurrentLevelSelect> for u8 {
+    fn from(value: ChargerTerminationCurrentLevelSelect) -> Self {
+        value as u8
+    }
+}
+
+impl From<u8> for ChargerTerminationCurrentLevelSelect {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => Self::SEL10,
+            1 => Self::SEL20,
+            _ => unreachable!(),
+        }
+    }
+}
+
+/// Battery charger termination current level select
+/// Expressed as a percentage of the charging current
+#[derive(Copy, Clone, Debug)]
+pub enum ChargerConfigDisableChargeWarm {
+    /// Enable charging if battery is warm
+    ENABLED = 0,
+    /// Disable charging if battery is warm
+    DISABLED = 1,
+}
+
+// Add conversion from u8
+impl From<u8> for ChargerConfigDisableChargeWarm {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => ChargerConfigDisableChargeWarm::ENABLED,
+            1 => ChargerConfigDisableChargeWarm::DISABLED,
+            _ => unreachable!(),
+        }
+    }
+}
+
+// Add conversion to u8
+impl From<ChargerConfigDisableChargeWarm> for u8 {
+    fn from(value: ChargerConfigDisableChargeWarm) -> Self {
+        value as u8
+    }
+}

@@ -4,6 +4,619 @@ config:
   buffer_address_type: u16
   defmt_feature: defmt-03
 
+CHARGER:
+  type: block
+  description: CHARGER registers
+  address_offset: 0x0300
+  objects:
+    TASKRELEASEERR:
+      type: command
+      description: Release charger from error
+      address: 0x00
+      size_bits_in: 1
+      fields_in:
+        TASKRELEASEERROR:
+          base: uint
+          start: 0
+          end: 1
+          description: Request to clear any existing task error state
+          try_conversion: crate::common::Task
+    TASKCLEARCHGERR:
+      type: command
+      description: Clear registers BCHGERRREASON and BCHGERRSENSOR
+      address: 0x01
+      size_bits_in: 1
+      fields_in:
+        TASKCLEARCHGERR:
+          base: uint
+          start: 0
+          end: 1
+          description: Request to clear registers BCHGERRREASON and BCHGERRSENSOR
+          try_conversion: crate::common::Task
+    TASKCLEARSAFETYTIMER:
+      type: command
+      description: Clear TRICKLE and CHARGE safety timers
+      address: 0x02
+      size_bits_in: 1
+      fields_in:
+        TASKCLEARSAFETYTIMER:
+          base: uint
+          start: 0
+          end: 1
+          description: Request to clear TRICKLE and CHARGE safety timers
+          try_conversion: crate::common::Task
+    BCHGENABLESET:
+      type: register
+      description: Charger enable set
+      address: 0x04
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        ENABLECHARGING:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger enable set
+          try_conversion: crate::charger::ChargerEnableSet
+        ENABLEFULLCHGCOOL:
+          base: uint
+          start: 1
+          end: 2
+          description: Controls maximum charge current in cool temperature conditions
+          try_conversion: crate::charger::ChargerEnableFullCurrentChargeInCoolTempSet
+    BCHGENABLECLR:
+      type: register
+      description: Charger enable clear
+      address: 0x05
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        ENABLECHARGING:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger enable clear
+          try_conversion: crate::charger::ChargerEnableClear
+        ENABLEFULLCHGCOOL:
+          base: uint
+          start: 1
+          end: 2
+          description: Controls maximum charge current in cool temperature conditions
+          try_conversion: crate::charger::ChargerEnableFullCurrentChargeInCoolTempClear
+    BCHGDISABLESET:
+      type: register
+      description: Battery charger disable recharge set
+      address: 0x06
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        DISABLERECHARGE:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger disable recharge set
+          try_conversion: crate::charger::ChargerDisableRechargeSet
+        DISABLENTC:
+          base: uint
+          start: 1
+          end: 2
+          description: Battery Charger ignore NTC thermistor temperature limits set
+          try_conversion: crate::charger::DisableNtcSet
+    BCHGDISABLECLR:
+      type: register
+      description: Battery charger disable recharge clear
+      address: 0x07
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        DISABLERECHARGE:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger disable recharge clear
+          try_conversion: crate::charger::ChargerDisableRechargeClear
+        DISABLENTC:
+          base: uint
+          start: 1
+          end: 2
+          description: Battery Charger ignore NTC thermistor temperature limits clear
+          try_conversion: crate::charger::DisableNtcClear
+    BCHGISETMSB:
+      type: register
+      description: Battery charger current configuration
+      address: 0x08
+      size_bits: 8
+      reset_value: 0x08
+      fields:
+        BCHGISETCHARGEMSB:
+          base: uint
+          start: 0
+          end: 8
+          description: Battery charger current setting MSB
+    BCHGISETLSB:
+      type: register
+      description: Battery charger current configuration
+      address: 0x09
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        BCHGISETCHARGELSB:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger current setting LSB
+    BCHGISETDISCHARGEMSB:
+      type: register
+      description: Battery charger discharge configuration
+      address: 0x0A
+      size_bits: 8
+      reset_value: 0xCF
+      fields:
+        BCHGISETDISCHARGEMSB:
+          base: uint
+          start: 0
+          end: 8
+          description: Battery charger discharge current limiter MSB
+    BCHGISETDISCHARGELSB:
+      type: register
+      description: Battery charger discharge configuration
+      address: 0x0B
+      size_bits: 1
+      reset_value: 0x01
+      fields:
+        BCHGISETDISCHARGELSB:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger discharge current limiter LSB
+    BCHGVTERM:
+      type: register
+      description: Battery charger termination voltage normal temperature
+      address: 0x0C
+      size_bits: 4
+      reset_value: 0x02
+      fields:
+        BCHGVTERMNORM:
+          base: uint
+          start: 0
+          end: 4
+          description: Battery charger normal termination voltage
+          conversion: crate::charger::ChargerTerminationVoltage
+    BCHGVTERMR:
+      type: register
+      description: Battery charger termination voltage warm temperature
+      address: 0x0D
+      size_bits: 4
+      reset_value: 0x02
+      fields:
+        BCHGVTERMREDUCED:
+          base: uint
+          start: 0
+          end: 4
+          description: Battery charger warm termination voltage
+          conversion: crate::charger::ChargerTerminationVoltage
+    BCHGVTRICKLESEL:
+      type: register
+      description: Battery charger trickle level select
+      address: 0x0E
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        BCHGVTRICKLESEL:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger trickle level select
+          conversion: crate::charger::ChargerTrickleLevelSelect
+    BCHGITERMSEL:
+      type: register
+      description: Battery charger termination current level select
+      address: 0x0F
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        BCHGITERMSEL:
+          base: uint
+          start: 0
+          end: 1
+          description: Battery charger termination current level select
+          conversion: crate::charger::ChargerTerminationCurrentLevelSelect
+    NTCCOLD:
+      type: register
+      description: NTC thermistor threshold for cold temperature region
+      address: 0x10
+      size_bits: 8
+      reset_value: 0xBB
+      fields:
+        NTCCOLDLVLMSB:
+          base: uint
+          start: 0
+          end: 8
+          description: NTC cold level MSB
+    NTCCOLDLSB:
+      type: register
+      description: NTC thermistor threshold for cold temperature region
+      address: 0x11
+      size_bits: 2
+      reset_value: 0x01
+      fields:
+        NTCCOLDLVLLSB:
+          base: uint
+          start: 0
+          end: 2
+          description: NTC cold level LSB
+    NTCCOOL:
+      type: register
+      description: NTC thermistor threshold for cool temperature region
+      address: 0x12
+      size_bits: 8
+      reset_value: 0xA4
+      fields:
+        NTCCOOLLVLMSB:
+          base: uint
+          start: 0
+          end: 8
+          description: NTC cool level MSB
+    NTCCOOLLSB:
+      type: register
+      description: NTC thermistor threshold for cool temperature region
+      address: 0x13
+      size_bits: 2
+      reset_value: 0x02
+      fields:
+        NTCCOOLLVLLSB:
+          base: uint
+          start: 0
+          end: 2
+          description: NTC cool level LSB
+    NTCWARM:
+      type: register
+      description: NTC thermistor threshold for warm temperature region
+      address: 0x14
+      size_bits: 8
+      reset_value: 0x54
+      fields:
+        NTCWARMLVLMSB:
+          base: uint
+          start: 0
+          end: 8
+          description: NTC cool level MSB
+    NTCWARMLSB:
+      type: register
+      description: NTC thermistor threshold for warm temperature region
+      address: 0x15
+      size_bits: 2
+      reset_value: 0x01
+      fields:
+        NTCWARMLVLLSB:
+          base: uint
+          start: 0
+          end: 2
+          description: NTC warm level LSB
+    NTCHOT:
+      type: register
+      description: NTC thermistor threshold for hot temperature region
+      address: 0x16
+      size_bits: 8
+      reset_value: 0x3B
+      fields:
+        NTCHOTLVLMSB:
+          base: uint
+          start: 0
+          end: 8
+          description: NTC hot level MSB
+    NTCHOTLSB:
+      type: register
+      description: NTC thermistor threshold for hot temperature region
+      address: 0x17
+      size_bits: 2
+      reset_value: 0x01
+      fields:
+        NTCHOTLVLLSB:
+          base: uint
+          start: 0
+          end: 2
+          description: NTC hot level LSB
+    DIETEMPSTOP:
+      type: register
+      description: Die temperature threshold at which charging will be stopped
+      address: 0x18
+      size_bits: 8
+      reset_value: 0x5A
+      fields:
+        DIETEMPSTOPCHG:
+          base: uint
+          start: 0
+          end: 8
+          description: Die temperature threshold at which charging will be stopped
+    DIETEMPSTOPLSB:
+      type: register
+      description: Die temperature threshold at which charging will be stopped
+      address: 0x19
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        DIETEMPSTOPCHGLSB:
+          base: uint
+          start: 0
+          end: 2
+          description: Die temperature threshold at which charging will be stopped LSB
+    DIETEMPRESUME:
+      type: register
+      description: Die temperature threshold at which charging will be resumed
+      address: 0x1A
+      size_bits: 8
+      reset_value: 0x5D
+      fields:
+        DIETEMPRESUMECHG:
+          base: uint
+          start: 0
+          end: 8
+          description: Die temperature threshold at which charging will be resumed
+    DIETEMPRESUMELSB:
+      type: register
+      description: Die temperature threshold at which charging will be resumed
+      address: 0x1B
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        DIETEMPRESUMECHGLSB:
+          base: uint
+          start: 0
+          end: 2
+          description: Die temperature threshold at which charging will be resumed LSB
+    BCHGILIMSTATUS:
+      type: register
+      description: Charger current limiter status
+      access: ReadOnly
+      address: 0x2D
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        BCHGILIMBATACTIVE:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: Charger current limiter status
+          conversion:
+            name: BCHGILIMBATACTIVE
+            INACTIVE:
+              value: default
+              description: Charger current limiter is inactive
+            ACTIVE:
+              value: 1
+              description: Charger current limiter is active
+    NTCSTATUS:
+      type: register
+      description: NTC comparator status
+      access: ReadOnly
+      address: 0x32
+      size_bits: 4
+      reset_value: 0x00
+      fields:
+        NTCCOLD:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: NTC cold
+        NTCCOOL:
+          base: uint
+          start: 1
+          end: 2
+          access: ReadOnly
+          description: NTC cool
+        NTCWARM:
+          base: uint
+          start: 2
+          end: 3
+          access: ReadOnly
+          description: NTC warm
+        NTCHOT:
+          base: uint
+          start: 3
+          end: 4
+          access: ReadOnly
+          description: NTC hot
+    DIETEMPSTATUS:
+      type: register
+      description: Die temperature comparator status
+      access: ReadOnly
+      address: 0x33
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        DIETEMPHIGH:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: Die temperature comparator status
+          conversion:
+            name: DIETEMPHIGH
+            NORMAL:
+              value: default
+              description: Die temperature below high threshold
+            HIGH:
+              value: 1
+              description: Die temperature above high threshold
+    BCHGCHARGESTATUS:
+      type: register
+      description: Charging status
+      access: ReadOnly
+      address: 0x34
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        BATTERYDETECTED:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: Battery is connected
+        COMPLETED:
+          base: uint
+          start: 1
+          end: 2
+          access: ReadOnly
+          description: Battery fully charged
+        TRICKLECHARGE:
+          base: uint
+          start: 2
+          end: 3
+          access: ReadOnly
+          description: Trickle charge
+        CONSTANTCURRENT:
+          base: uint
+          start: 3
+          end: 4
+          access: ReadOnly
+          description: Constant current charging
+        CONSTANTVOLTAGE:
+          base: uint
+          start: 4
+          end: 5
+          access: ReadOnly
+          description: Constant voltage charging
+        RECHARGE:
+          base: uint
+          start: 5
+          end: 6
+          access: ReadOnly
+          description: Battery recharge is needed
+        DIETEMPHIGHCHGPAUSED:
+          base: uint
+          start: 6
+          end: 7
+          access: ReadOnly
+          description: Charging is stopped due to high die temperature
+        SUPPLEMENTACTIVE:
+          base: uint
+          start: 7
+          end: 8
+          access: ReadOnly
+          description: Supplement mode is active
+    BCHGERRREASON:
+      type: register
+      description: Charger-FSM Error. Latched error reasons. Cleared with TASKS_CLEAR_CHG_ERR.
+      access: ReadOnly
+      address: 0x36
+      size_bits: 7
+      reset_value: 0x00
+      fields:
+        NTCSENSORERROR:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: NTC sensor error
+        VBATSENSORERROR:
+          base: uint
+          start: 1
+          end: 2
+          access: ReadOnly
+          description: VBAT sensor error
+        VBATLOW:
+          base: uint
+          start: 2
+          end: 3
+          access: ReadOnly
+          description: VBAT low error
+        VTRICKLE:
+          base: uint
+          start: 3
+          end: 4
+          access: ReadOnly
+          description: Vtrickle error
+        MEASTIMEOUT:
+          base: uint
+          start: 4
+          end: 5
+          access: ReadOnly
+          description: Measurement timeout error
+        CHARGETIMEOUT:
+          base: uint
+          start: 5
+          end: 6
+          access: ReadOnly
+          description: Charge timeout error
+        TRICKLETIMEOUT:
+          base: uint
+          start: 6
+          end: 7
+          access: ReadOnly
+          description: Trickle timeout error
+    BCHGERRSENSOR:
+      type: register
+      description: Charger-FSM Error. Latched sensor values. Cleared with TASKS_CLEAR_CHG_ERR.
+      access: ReadOnly
+      address: 0x37
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        SENSORNTCCOLD:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: NTC cold sensor value during error
+        SENSORNTCCOOL:
+          base: uint
+          start: 1
+          end: 2
+          access: ReadOnly
+          description: NTC cool sensor value during error
+        SENSORNTCWARM:
+          base: uint
+          start: 2
+          end: 3
+          access: ReadOnly
+          description: NTC warm sensor value during error
+        SENSORNTCHOT:
+          base: uint
+          start: 3
+          end: 4
+          access: ReadOnly
+          description: NTC hot sensor value during error
+        SENSORVTERM:
+          base: uint
+          start: 4
+          end: 5
+          access: ReadOnly
+          description: VTERM sensor value during error
+        SENSORRECHARGE:
+          base: uint
+          start: 5
+          end: 6
+          access: ReadOnly
+          description: Recharge sensor value during error
+        SENSORVTRICKLE:
+          base: uint
+          start: 6
+          end: 7
+          access: ReadOnly
+          description: Vtrickle sensor value during error
+        SENSORVBATLOW:
+          base: uint
+          start: 7
+          end: 8
+          access: ReadOnly
+          description: VBAT low sensor value during error
+    BCHGCONFIG:
+      type: register
+      description: Charger configuration
+      address: 0x3C
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        DISABLECHARGEWARM:
+          base: uint
+          start: 0
+          end: 1
+          description: Disable charging if battery is warm
+          conversion: crate::charger::ChargerConfigDisableChargeWarm
+
 BUCK:
   type: block
   description: BUCK registers
