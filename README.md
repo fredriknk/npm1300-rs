@@ -6,14 +6,16 @@ This crate provides both low-level register access and a high-level API for mana
 ## Features
 
 - `no_std` support for embedded environments
-- Async interface
+- Async design
+- Type-safe register access
 - [`defmt`](https://github.com/knurling-rs/defmt) support for logging (optional)
-- Uses the [`device-driver`](https://docs.rs/device-driver/) toolkit for low-level register generation
+- Generated low-level API using [`device-driver`](https://docs.rs/device-driver/)
+- Minimal dependencies
 
 ## API Coverage
 
 > [!IMPORTANT]
-> The driver is currently under development, and the API may change.
+> The driver is currently under development, and the API may change before reaching 1.0.
 
 | **Component**                             | **Low-Level API** | **High-Level API** |
 | ----------------------------------------- | :---------------: | :----------------: |
@@ -30,14 +32,14 @@ This crate provides both low-level register access and a high-level API for mana
 | Fuel gauge                                |        ❌         |         ❌         |
 
 > [!WARNING]
-> Most functions in this driver have been tested, though not exhaustively; contributions are welcome to help identify and fix any remaining bugs.
+> While core functionality has been tested, this driver is not yet production-ready. Contributions and bug reports are welcome!
 
 > [!NOTE]
-> This crate does not provide a synchronous API and there are no plans to add one. Contributions are welcome!
+> This crate is async-only and there are no plans to add synchronous APIs. Contributions are welcome!
 
-## Usage
+## Usage Example
 
-To use this crate, import it and initialize the driver with your I2C peripheral. Example code for the nRF52840 using the [`embassy`](https://github.com/embassy-rs/embassy) async framework is available in the [`examples`](examples) directory.
+Here's a minimal example using the Embassy framework on an nRF52840:
 
 ```rust
 #![no_std]
@@ -73,9 +75,11 @@ async fn main(_spawner: Spawner) {
 }
 ```
 
+More examples can be found in the [`examples`](examples) directory.
+
 ## Support
 
-For questions, issues, feature requests, and contributions, please open an issue on GitHub.
+- [GitHub Issues](https://github.com/user/npm1300-rs/issues) - Bug reports, feature requests, and questions
 
 ## License
 
@@ -88,6 +92,11 @@ at your option.
 
 ## Contributing
 
-By contributing, you agree that your work will be dual-licensed as above, without additional terms or conditions.
+We welcome contributions! Please:
 
-This project follows the [conventional commits](https://www.conventionalcommits.org) specification for commit messages.
+1. Fork the repository
+2. Create a feature branch
+3. Follow [conventional commits](https://www.conventionalcommits.org) for commit messages
+4. Submit a Pull Request
+
+By contributing, you agree that your work will be dual-licensed as above, without additional terms or conditions.
