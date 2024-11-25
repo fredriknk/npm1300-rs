@@ -4,8 +4,8 @@
 /// state of the battery charging system.
 ///
 /// # Write behavior
-/// - Writing 1: Enables the battery charger
 /// - Writing 0: No effect on current state
+/// - Writing 1: Enables the battery charger
 ///
 /// # Read behavior
 /// Returns current charger enable state:
@@ -50,8 +50,8 @@ impl From<ChargerEnableSet> for u8 {
 /// when battery temperature is in the cool range.
 ///
 /// # Write behavior
-/// - Writing 1: Enables 100% charge current as defined by BCHGISETMSB:BCHGISETLSB
 /// - Writing 0: No effect on current state
+/// - Writing 1: Enables 100% charge current as defined by BCHGISETMSB:BCHGISETLSB
 ///
 /// # Read behavior
 /// Returns current charge current limit setting:
@@ -98,8 +98,8 @@ impl From<ChargerEnableFullCurrentChargeInCoolTempSet> for u8 {
 /// state of the battery charging system.
 ///
 /// # Write behavior
-/// - Writing 1: No effect on current state
-/// - Writing 0: Disables the battery charger
+/// - Writing 0: No effect on current state
+/// - Writing 1: Disables the battery charger
 ///
 /// # Read behavior
 /// Returns current charger enable state:
@@ -144,8 +144,8 @@ impl From<ChargerEnableClear> for u8 {
 /// when battery temperature is in the cool range.
 ///
 /// # Write behavior
-/// - Writing 1: No effect on current state
-/// - Writing 0: Disables the battery charger
+/// - Writing 0: No effect on current state
+/// - Writing 1: Disables the battery charger
 ///
 /// # Read behavior
 /// Returns current charge current limit setting:
@@ -193,7 +193,7 @@ impl From<ChargerEnableFullCurrentChargeInCoolTempClear> for u8 {
 ///
 /// # Write behavior
 /// - Writing 0: No effect on current state
-/// - Writing 1: Disable Recharging of battery once charged
+/// - Writing 1: Disable recharging of battery once charged
 ///
 /// # Read behavior
 /// Returns current charger disable recharge state:
