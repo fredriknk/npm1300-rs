@@ -16,6 +16,12 @@ const ADDR: u8 = 0x6B;
 pub enum NPM1300Error<I2cError> {
     #[error("i2c error: {0:?}")]
     I2c(I2cError),
+    #[error("charger current {0:?} is too high")]
+    ChargerCurrentTooHigh(u16),
+    #[error("invalid NTC threshold")]
+    InvalidNtcThreshold,
+    #[error("invalid die temperature stop/resume threshold")]
+    InvalidDieTemperatureThreshold,
 }
 
 #[derive(Debug)]
