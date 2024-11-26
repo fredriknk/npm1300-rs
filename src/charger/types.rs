@@ -406,6 +406,8 @@ impl From<u8> for ChargerTerminationVoltage {
             11 => Self::V4_35,
             12 => Self::V4_40,
             13 => Self::V4_45,
+            14 => Self::V3_60,
+            15 => Self::V3_60,
             _ => panic!("Invalid value"),
         }
     }
@@ -496,4 +498,136 @@ impl From<ChargerConfigDisableChargeWarm> for u8 {
     fn from(value: ChargerConfigDisableChargeWarm) -> Self {
         value as u8
     }
+}
+
+/// Discharge current limit settings
+pub enum DischargeCurrentLimit {
+    Low,
+    High,
+}
+
+/// Temperature threshold regions for NTC measurements
+#[derive(Debug, Clone, Copy)]
+pub enum NtcThresholdRegion {
+    /// Cold temperature threshold (lowest)
+    Cold,
+    /// Cool temperature threshold
+    Cool,
+    /// Warm temperature threshold
+    Warm,
+    /// Hot temperature threshold (highest)
+    Hot,
+}
+
+/// Die temperature threshold regions for temperature monitoring during charging
+#[derive(Debug, Clone, Copy)]
+pub enum DieTemperatureThresholdType {
+    /// Stop temperature threshold
+    Stop,
+    /// Resume temperature threshold
+    Resume,
+}
+
+pub struct ChargerStatus {
+    /// Indicates if a battery is physically connected to the system
+    ///
+    /// # Returns
+    /// - `true`: Battery is connected and detected
+    /// - `false`: No battery is connected
+    pub is_battery_present: bool,
+
+    /// Indicates if the battery has reached full charge
+    ///
+    /// # Returns
+    /// - `true`: Battery has reached full charge and charging has stopped
+    /// - `false`: Battery is still charging or not at full capacity
+    pub is_charging_complete: bool,
+
+    /// Indicates if trickle charging mode is active
+    ///
+    /// Trickle charging is used when battery voltage is very low, charging at a reduced rate
+    /// to safely bring the battery up to a minimum voltage level.
+    ///
+    /// # Returns
+    /// - `true`: Trickle charging is currently active
+    /// - `false`: Not in trickle charging mode
+    pub is_trickle_charging: bool,
+
+    /// Indicates if constant current charging mode is active
+    ///
+    /// During constant current charging, the charger maintains a steady charging current
+    /// until the battery reaches a specific voltage threshold.
+    ///
+    /// # Returns
+    /// - `true`: Constant current charging is active
+    /// - `false`: Not in constant current charging mode
+    pub is_constant_current_charging: bool,
+
+    /// Indicates if constant voltage charging mode is active
+    ///
+    /// During constant voltage charging, the charger maintains a steady voltage while
+    /// the charging current gradually decreases.
+    ///
+    /// # Returns
+    /// - `true`: Constant voltage charging is active
+    /// - `false`: Not in constant voltage charging mode
+    pub is_constant_voltage_charging: bool,
+
+    /// Indicates if the battery requires recharging
+    ///
+    /// This flag is set when the battery voltage drops below the recharge threshold
+    /// after being previously fully charged.
+    ///
+    /// # Returns
+    /// - `true`: Battery needs recharging
+    /// - `false`: Battery does not need recharging
+    pub needs_recharge: bool,
+
+    /// Indicates if charging has been paused due to high die temperature
+    ///
+    /// The charger automatically pauses charging when the internal die temperature
+    /// exceeds the configured DIETEMPSTOP threshold to prevent damage.
+    ///
+    /// # Returns
+    /// - `true`: Charging is paused due to high temperature
+    /// - `false`: Temperature is within acceptable range
+    pub is_charging_paused_by_die_temperature: bool,
+
+    /// Indicates if supplement mode is active
+    ///
+    /// Supplement mode activates when system power demand exceeds the input current limit (IBUSLIM)
+    /// during charging. In this mode, the system draws additional current from the battery
+    /// (up to IBATLIM) to maintain stable system voltage.
+    ///
+    /// # Returns
+    /// - `true`: Supplement mode is active
+    /// - `false`: Normal charging mode
+    pub is_supplement_mode_active: bool,
+}
+
+/// Charger-FSM Error.
+/// Latched error reasons.
+/// Cleared with TASKS_CLEAR_CHG_ERR
+pub struct ChargerErrorReason {
+    pub ntc_sensor_error: bool,
+    pub vbat_sensor_error: bool,
+    pub vbat_low_error: bool,
+    pub vtrickle_error: bool,
+    pub measurement_timeout_error: bool,
+    pub charge_timeout_error: bool,
+    pub trickle_timeout_error: bool,
+}
+
+/// Charger-FSM Error.
+/// Latched sensor values.
+/// Cleared with TASKS_CLEAR_CHG_ERR
+pub struct ChargerSensorValueDuringError {
+    pub sensor_ntc_cold: bool,
+    pub sensor_ntc_cool: bool,
+    pub sensor_ntc_warm: bool,
+    pub sensor_ntc_hot: bool,
+    pub sensor_vterm: bool,
+    pub sensor_recharge: bool,
+    pub sensor_vtrickle: bool,
+    pub sensor_vbat_low: bool,
 }
