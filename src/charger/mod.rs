@@ -48,6 +48,15 @@ impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
     }
 
     /// Enable battery charging
+    ///
+    /// Before enabling charging, ensure proper configuration of:
+    /// - Charging current
+    /// - Termination voltages for normal and warm temperature conditions
+    /// - NTC thermistor settings (either configure type or disable if not present)
+    /// - VBUS input current limit
+    ///
+    /// # Safety
+    /// Improper charger configuration may lead to unsafe charging conditions.
     pub async fn enable_battery_charging(&mut self) -> Result<(), crate::NPM1300Error<I2c::Error>> {
         // Enable battery charging
         self.device
