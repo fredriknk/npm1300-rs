@@ -146,7 +146,7 @@ impl From<GpioDriveStrength> for u8 {
 
 /// GPIO Pull-up Configuration
 #[derive(Debug, Clone, Copy)]
-#[repr(u8)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum GpioPullUp {
     Disable = 0,
     Enable = 1,
@@ -172,7 +172,7 @@ impl From<GpioPullUp> for u8 {
 
 /// GPIO Pull-down Configuration
 #[derive(Debug, Clone, Copy)]
-#[repr(u8)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum GpioPullDown {
     Disable = 0,
     Enable = 1,
@@ -199,7 +199,7 @@ impl From<GpioPullDown> for u8 {
 
 /// GPIO Open Drain Configuration
 #[derive(Debug, Clone, Copy)]
-#[repr(u8)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum GpioOpenDrain {
     Disable = 0,
     Enable = 1,
@@ -225,7 +225,7 @@ impl From<GpioOpenDrain> for u8 {
 
 /// GPIO Debounce Configuration
 #[derive(Debug, Clone, Copy)]
-#[repr(u8)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum GpioDebounce {
     Disable = 0,
     Enable = 1,
