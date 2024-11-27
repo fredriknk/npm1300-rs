@@ -1,5 +1,6 @@
 /// Input current limit for VBUS
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum VbusInCurrentLimit {
     // 500 mA
     MA500 = 0,
@@ -69,6 +70,7 @@ impl From<VbusInCurrentLimit> for u8 {
 
 /// Input current limit for VBUS
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum VbusInCcCmp {
     /// No connection
     NoConnection = 0,
@@ -98,4 +100,52 @@ impl From<VbusInCcCmp> for u8 {
     fn from(value: VbusInCcCmp) -> Self {
         value as u8
     }
+}
+
+/// VBUS CC comparator status flags
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub struct VbusCcStatus {
+    pub vbusin_cc1_status: VbusInCcCmp,
+    pub vbusin_cc2_status: VbusInCcCmp,
+}
+
+/// VBUS status flags
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+pub struct VbusInStatus {
+    /// Indicates if VBUS is detected
+    ///
+    /// # Returns
+    /// - `true`: VBUS is detected
+    /// - `false`: VBUS is not detected
+    pub is_vbus_in_present: bool,
+    /// Indicates if VBUS input current limit is active
+    ///
+    /// # Returns
+    /// - `true`: VBUS input current limit is active
+    /// - `false`: VBUS input current limit is not active
+    pub is_vbus_in_current_limit_active: bool,
+    /// Indicates if VBUS input over-voltage protection is active
+    ///
+    /// # Returns
+    /// - `true`: VBUS input over-voltage protection is active
+    /// - `false`: VBUS input over-voltage protection is not active
+    pub is_vbus_in_overvoltage_protection_active: bool,
+    /// Indicates if VBUS input under-voltage protection is active
+    ///
+    /// # Returns
+    /// - `true`: VBUS input under-voltage protection is active
+    /// - `false`: VBUS input under-voltage protection is not active
+    pub is_vbus_undervoltage_detected: bool,
+    /// Indicates if VBUS input is suspended
+    ///
+    /// # Returns
+    /// - `true`: VBUS input is suspended
+    /// - `false`: VBUS input is not suspended
+    pub is_vbus_in_suspended: bool,
+    /// Indicates if VBUS output is active
+    ///
+    /// # Returns
+    /// - `true`: VBUS output is active
+    /// - `false`: VBUS output is not active
+    pub is_vbus_out_active: bool,
 }
