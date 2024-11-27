@@ -1228,3 +1228,393 @@ GPIOS:
           description: GPIO4 status
           access: ReadOnly
           try_conversion: crate::gpios::GpioStatus
+
+ADC:
+  type: block
+  description: SAADC registers
+  address_offset: 0x0500
+  objects:
+    TASKVBATMEASURE:
+      type: command
+      description: Take VBAT measurement
+      address: 0x00
+      size_bits_in: 1
+      fields_in:
+        TASKVBATMEASURE:
+          base: uint
+          start: 0
+          end: 1
+          description: Start VBAT measurement
+          try_conversion: crate::common::Task
+    TASKNTCMEASURE:
+      type: command
+      description: Take NTC measurement
+      address: 0x01
+      size_bits_in: 1
+      fields_in:
+        TASKNTCMEASURE:
+          base: uint
+          start: 0
+          end: 1
+          description: Start battery NTC thermistor measurement
+          try_conversion: crate::common::Task
+    TASKTEMPMEASURE:
+      type: command
+      description: Take die temperature measurement
+      address: 0x02
+      size_bits_in: 1
+      fields_in:
+        TASKTEMPMEASURE:
+          base: uint
+          start: 0
+          end: 1
+          description: Start die temperature measurement
+          try_conversion: crate::common::Task
+    TASKVSYSMEASURE:
+      type: command
+      description: Take VSYS measurement
+      address: 0x03
+      size_bits_in: 1
+      fields_in:
+        TASKVSYSMEASURE:
+          base: uint
+          start: 0
+          end: 1
+          description: Start VSYS measurement
+          try_conversion: crate::common::Task
+    TASKIBATMEASURE:
+      type: command
+      description: Take IBAT measurement
+      address: 0x06
+      size_bits_in: 1
+      fields_in:
+        TASKVSYSMEASURE:
+          base: uint
+          start: 0
+          end: 1
+          description: Start VSYS measurement
+          try_conversion: crate::common::Task
+    TASKVBUS7MEASURE:
+      type: command
+      description: Take VBUS 7 volt range measurement
+      address: 0x07
+      size_bits_in: 1
+      fields_in:
+        TASKVSYSMEASURE:
+          base: uint
+          start: 0
+          end: 1
+          description: Start VBUS 7 volt range measurement
+          try_conversion: crate::common::Task
+    TASKDELAYEDVBATMEASURE:
+      type: command
+      description: Task Take delayed VBAT measurement
+      address: 0x08
+      size_bits_in: 1
+      fields_in:
+        TASKDLYDVBATMEASURE:
+          base: uint
+          start: 0
+          end: 1
+          description: Start delayed VBAT measurement
+          try_conversion: crate::common::Task
+    ADCCONFIG:
+      type: register
+      description: ADC configuration
+      address: 0x09
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        VBATAUTOENABLE:
+          base: uint
+          start: 0
+          end: 1
+          description: Enable VBAT auto measurement every 1 second
+          conversion:
+            name: VBATAUTOENABLE
+            NOAUTO:
+              value: default
+              description: Single measurement when triggered
+            AUTOENABLE:
+              value: 1
+              description: Make measurement every 1s
+        VBATBURSTENABLE:
+          base: uint
+          start: 1
+          end: 2
+          description: Enable VBAT burst mode
+          conversion:
+            name: VBATBURSTENABLE
+            SINGLEMODE:
+              value: default
+              description: Make a single measurement
+            BURSTMODE:
+              value: 1
+              description: Make 4 consecutive measurements
+    ADCNTCRSEL:
+      type: register
+      description: Select battery NTC
+      address: 0x0A
+      size_bits: 2
+      reset_value: 0x01
+      fields:
+        ADCNTCRSEL:
+          base: uint
+          start: 0
+          end: 2
+          description: Select value and TRIM to match battery NTC resistance
+          conversion:
+            name: AdcNtc
+            NONE:
+              value: default
+              description: No thermistor
+            NTC10K:
+              value: 1
+              description: 10K NTC
+            NTC47K:
+              value: 2
+              description: 47K NTC
+            NTC100K:
+              value: 3
+              description: 100K NTC
+    ADCAUTOTIMCONF:
+      type: register
+      description: Auto measurements interval
+      address: 0x0B
+      size_bits: 4
+      reset_value: 0x03
+      fields:
+        NTCAUTOTIM:
+          base: uint
+          start: 0
+          end: 2
+          description: NTC thermistor measurement interval during charging
+          conversion:
+            name: NTCAUTOTIM
+            MS4:
+              value: default
+              description: 4 ms
+            MS64:
+              value: 1
+              description: 64 ms
+            MS128:
+              value: 2
+              description: 128 ms
+            MS1024:
+              value: 3
+              description: 1024 ms
+        TEMPAUTOTIM:
+          base: uint
+          start: 2
+          end: 4
+          description: Die temperature measurement interval during charging
+          conversion:
+            name: TEMPAUTOTIM
+            MS4:
+              value: default
+              description: 4 ms
+            MS8:
+              value: 1
+              description: 8 ms
+            MS16:
+              value: 2
+              description: 16 ms
+            MS32:
+              value: 3
+              description: 32 m
+    TASKAUTOTIMUPDATE:
+      type: command
+      description: Updates the NTC and die temperature measurement intervals
+      address: 0x0C
+      size_bits_in: 1
+      fields_in:
+        TASKAUTOTIMUPDATE:
+          base: uint
+          start: 0
+          end: 1
+          description: Handshake signal to apply new NTC and die temperature measurement interval settings
+          try_conversion: crate::common::Task
+    ADCDELTIMCONF:
+      type: register
+      description: VBAT delay timer control
+      address: 0x0D
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        VBATDELTIM:
+          base: uint
+          start: 0
+          end: 8
+          description: Delayed VBAT measurement time from 4ms at 0x00 to 514ms at 0xFF with 2ms steps
+    BCHARGERICHARGE:
+      type: register
+      description: Battery current measurement status
+      access: ReadOnly
+      address: 0x10
+      size_bits: 5
+      reset_value: 0x00
+      fields:
+        BCHARGERICHARGE:
+          base: uint
+          start: 0
+          end: 2
+          access: ReadOnly
+          description: Battery current charge
+        BCHARGERMODE:
+          base: uint
+          start: 2
+          end: 4
+          access: ReadOnly
+          description: Battery charger mode
+        BATMEASEINVALID:
+          base: uint
+          start: 4
+          end: 5
+          access: ReadOnly
+          description: Ibat measurement invalid flag
+    ADCVBATRESULTMSB:
+      type: register
+      description: ADC VBAT measurement result MSB
+      access: ReadOnly
+      address: 0x11
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        VBATRESULTMSB:
+          base: uint
+          start: 0
+          end: 8
+          access: ReadOnly
+          description: ADC VBAT measurement result upper 8-bits
+    ADCNTCRESULTMSB:
+      type: register
+      description: ADC NTC measurement result MSB
+      access: ReadOnly
+      address: 0x12
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        NTCRESULTMSB:
+          base: uint
+          start: 0
+          end: 8
+          access: ReadOnly
+          description: ADC battery NTC thermistor measurement result upper 8-bits
+    ADCTEMPRESULTMSB:
+      type: register
+      description: ADC die temperature measurement result MSB
+      access: ReadOnly
+      address: 0x13
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        TEMPRESULTMSB:
+          base: uint
+          start: 0
+          end: 8
+          access: ReadOnly
+          description: ADC die temperature measurement result upper 8-bits
+    ADCVSYSRESULTMSB:
+      type: register
+      description: ADC VSYS measurement result MSB
+      access: ReadOnly
+      address: 0x14
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        VSYSRESULTMSB:
+          base: uint
+          start: 0
+          end: 8
+          access: ReadOnly
+          description: ADC VSYS measurement result upper 8-bits
+    ADCGP0RESULTLSBS:
+      type: register
+      description: ADC result LSB's (VBAT, NTC, die temperature and VSYS)
+      access: ReadOnly
+      address: 0x15
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        VBATRESULTLSB:
+          base: uint
+          start: 0
+          end: 2
+          access: ReadOnly
+          description: VBAT measurement result LSBs
+        NTCRESULTLSB:
+          base: uint
+          start: 2
+          end: 4
+          access: ReadOnly
+          description: NTC measurement result LSBs
+        TEMPRESULTLSB:
+          base: uint
+          start: 4
+          end: 6
+          access: ReadOnly
+          description: Die temperature measurement result LSBs
+        VSYSRESULTLSB:
+          base: uint
+          start: 6
+          end: 8
+          access: ReadOnly
+          description: VSYS measurement result LSBs
+    ADCVBATBURSTRESULTMSB:
+      type: register
+      description: ADC VBAT (or VBUS) burst measurement result MSB
+      access: ReadOnly
+      address: 0x16
+      repeat:
+        count: 4
+        stride: 1
+      size_bits: 8
+      fields:
+        VBATRESULTMSB:
+          base: uint
+          start: 0
+          end: 8
+          description: ADC VBAT (or VBUS) burst measurement result upper 8-bits
+    ADCGP1RESULTLSBS:
+      type: register
+      description: ADC result LSB's (VBAT burst 0, 1, 2 and 3)
+      access: ReadOnly
+      address: 0x1A
+      size_bits: 8
+      reset_value: 0x00
+      fields:
+        VBAT0RESULTLSB:
+          base: uint
+          start: 0
+          end: 2
+          access: ReadOnly
+          description: Burst VBAT0 measurement result LSBs
+        VBAT1RESULTLSB:
+          base: uint
+          start: 2
+          end: 4
+          access: ReadOnly
+          description: Burst VBAT1 measurement result LSBs
+        VBAT2RESULTLSB:
+          base: uint
+          start: 4
+          end: 6
+          access: ReadOnly
+          description: Burst VBAT2 measurement result LSBs
+        VBAT3RESULTLSB:
+          base: uint
+          start: 6
+          end: 8
+          access: ReadOnly
+          description: Burst VBAT3 measurement result LSBs
+    ADCIBATMEASEN:
+      type: register
+      description: Enable auto IBAT measurement
+      address: 0x24
+      size_bits: 1
+      fields:
+        IBATMEASENABLE:
+          base: uint
+          start: 0
+          end: 1
+          description: Enable auto IBAT measurement after VBAT task
