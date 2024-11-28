@@ -5,7 +5,9 @@ pub use types::*;
 
 use crate::{common::Task, Vbussuspendena};
 
-impl<I2c: embedded_hal_async::i2c::I2c> crate::NPM1300<I2c> {
+impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs>
+    crate::NPM1300<I2c, Delay>
+{
     /// Set VBUS input current limit
     ///
     /// This function sets the input current limit and triggers a switch from VBUSINILIMSTARTUP to VBUSINILIM0.
