@@ -26,6 +26,10 @@ pub enum NPM1300Error<I2cError> {
     InvalidDieTemperatureThreshold,
     #[error("invalid NTC beta")]
     InvalidNtcBeta,
+    #[error(
+        "invalid VBAT measurement delay value, it must be between 4 and 514 and a multiple of 2"
+    )]
+    InvalidVbatMeasurementDelayValue,
 }
 
 #[derive(Debug)]

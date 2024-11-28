@@ -25,13 +25,19 @@ This crate provides both low-level register access and a high-level API for mana
 | LOADSW/LDO — Load switches/LDO regulators |        ❌         |         ❌         |
 | LEDDRV — LED drivers                      |        ✅         |         ✅         |
 | GPIO — General-purpose I/O                |        ✅         |         ✅         |
-| ADC - System Monitor                      |        ✅         |         ❌         |
+| ADC - System Monitor                      |        ✅         |         ⚠️         |
 | POF - Power-fail comparator               |        ❌         |         ❌         |
 | TIMER — Timer/monitor                     |        ❌         |         ❌         |
 | Ship and hibernate modes                  |        ❌         |         ❌         |
 | Event and interrupt                       |        ❌         |         ❌         |
 | Reset and error                           |        ❌         |         ❌         |
 | Fuel gauge                                |        ❌         |         ❌         |
+
+Legend:
+
+- ✅ Fully implemented (at least should be)
+- ⚠️ Implemented but has known issues (see [Issues](https://github.com/thermigo/npm1300-rs/issues))
+- ❌ Not yet implemented
 
 > [!WARNING]
 > While core functionality has been tested, this driver is not yet production-ready. Contributions and bug reports are welcome!
