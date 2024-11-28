@@ -1494,7 +1494,7 @@ ADC:
           end: 2
           description: Select value and TRIM to match battery NTC resistance
           conversion:
-            name: AdcNtc
+            name: NtcThermistorType
             NONE:
               value: default
               description: No thermistor
