@@ -1793,7 +1793,7 @@ POF:
           end: 6
           description: VSYS comparator threshold
           conversion:
-            name: POFVSYSTHRESH
+            name: VsysThreshold
             V2_8:
               value: default
               description: 2.8V
