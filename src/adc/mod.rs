@@ -1,6 +1,18 @@
 use crate::{common::Task, Vbatautoenable};
 use libm::logf;
 
+/// Convert an ADC voltage measurement to a voltage in volts
+///
+/// # Arguments
+///
+/// * `v_adc` - The ADC voltage measurement in u16
+fn convert_vadc_to_voltage(v_adc: u16) -> f32 {
+    // Convert result to f32
+    // 5.0 is VFSVBAT, the full scale voltage for measuring VBAT.
+    // 1023.0 is the maximum value for the 10 bit ADC.
+    (v_adc as f32 / 1023.0) * 5.0
+}
+
 impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs>
     crate::NPM1300<I2c, Delay>
 {
@@ -50,7 +62,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         // Convert result to f32
         // 5.0 is VFSVBAT, the full scale voltage for measuring VBAT.
         // 1023.0 is the maximum value for the 10 bit ADC.
-        let result = (result as f32 / 1023.0) * 5.0;
+        let result = convert_vadc_to_voltage(result);
 
         Ok(result)
     }
@@ -200,7 +212,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         // Convert result to f32
         // 5.0 is VFSVSYS, the full scale voltage for measuring VSYS.
         // 1023.0 is the maximum value for the 10 bit ADC.
-        let result = (result as f32 / 1023.0) * 5.0;
+        let result = convert_vadc_to_voltage(result);
 
         Ok(result)
     }
