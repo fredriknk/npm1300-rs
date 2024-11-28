@@ -4,6 +4,7 @@ use device_driver::AsyncRegisterInterface;
 
 pub mod common;
 
+pub mod adc;
 pub mod buck;
 pub mod charger;
 pub mod gpios;
@@ -23,6 +24,12 @@ pub enum NPM1300Error<I2cError> {
     InvalidNtcThreshold,
     #[error("invalid die temperature stop/resume threshold")]
     InvalidDieTemperatureThreshold,
+    #[error("invalid NTC beta")]
+    InvalidNtcBeta,
+    #[error(
+        "invalid VBAT measurement delay value, it must be between 4 and 514 and a multiple of 2"
+    )]
+    InvalidVbatMeasurementDelayValue,
 }
 
 #[derive(Debug)]
@@ -30,14 +37,20 @@ pub struct DeviceInterface<I2c: embedded_hal_async::i2c::I2c> {
     pub i2c: I2c,
 }
 
-pub struct NPM1300<I2c: embedded_hal_async::i2c::I2c> {
+pub struct NPM1300<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs> {
     device: Device<DeviceInterface<I2c>>,
+    delay: Delay,
+    ntc_beta: Option<f32>,
 }
 
-impl<I2c: embedded_hal_async::i2c::I2c> NPM1300<I2c> {
-    pub fn new(i2c: I2c) -> Self {
+impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs>
+    NPM1300<I2c, Delay>
+{
+    pub fn new(i2c: I2c, delay: Delay) -> Self {
         Self {
             device: Device::new(DeviceInterface { i2c }),
+            delay,
+            ntc_beta: None,
         }
     }
 }
