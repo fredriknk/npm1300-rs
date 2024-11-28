@@ -1,4 +1,4 @@
-use crate::{common::Task, Vbatautoenable};
+use crate::{common::Task, NtcThermistorType, Vbatautoenable};
 use libm::logf;
 
 /// Convert an ADC voltage measurement to a voltage in volts
@@ -236,6 +236,23 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
                     Vbatautoenable::Noauto
                 })
             })
+            .await
+    }
+
+    /// Configure the NTC thermistor resistance value
+    ///
+    /// # Arguments
+    ///
+    /// * `ntc_value` - The NTC thermistor resistance value to configure
+    pub async fn configure_ntc_resistance(
+        &mut self,
+        ntc_resistance: NtcThermistorType,
+    ) -> Result<(), crate::NPM1300Error<I2c::Error>> {
+        // Write NTC value to register
+        self.device
+            .adc()
+            .adcntcrsel()
+            .write_async(|reg| reg.set_adcntcrsel(ntc_resistance))
             .await
     }
 }
