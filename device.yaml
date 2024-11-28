@@ -4,6 +4,136 @@ config:
   buffer_address_type: u16
   defmt_feature: defmt-03
 
+VBUSIN:
+  type: block
+  description: VBUSIN registers
+  address_offset: 0x0200
+  objects:
+    TASKUPDATEILIMSW:
+      type: command
+      description: Select Input current limit for VBUS
+      address: 0x00
+      size_bits_in: 1
+      fields_in:
+        TASKUPDATEILIM:
+          base: uint
+          start: 0
+          end: 1
+          description: Set to switch from default VBUSINILIMSTARTUP current limit to the value in VBUSINILIM0
+          try_conversion: crate::common::Task
+    VBUSINILIM0:
+      type: register
+      description: Input current limit for VBUS
+      address: 0x01
+      size_bits: 4
+      reset_value: 0x00
+      fields:
+        VBUSINILIM0:
+          base: uint
+          start: 0
+          end: 4
+          description: Input current limit for VBUS selected by Host
+          conversion: crate::sysreg::VbusInCurrentLimit
+    VBUSINILIMSTARTUP:
+      type: register
+      description: Input current limit for VBUS at startup
+      address: 0x02
+      size_bits: 4
+      reset_value: 0x00
+      fields:
+        VBUSINILIMSTARTUP:
+          base: uint
+          start: 0
+          end: 4
+          description: Default input current limit for VBUS
+          conversion: crate::sysreg::VbusInCurrentLimit
+    VBUSSUSPEND:
+      type: register
+      description: VBUS suspend mode enable
+      address: 0x03
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        VBUSSUSPENDENA:
+          base: uint
+          start: 0
+          end: 1
+          description: VBUS suspend control bit
+          conversion:
+            name: VBUSSUSPENDENA
+            NORMAL:
+              value: default
+              description: Normal mode
+            SUSPEND:
+              value: 1
+              description: Suspend mode
+    USBCDETECTSTATUS:
+      type: register
+      description: VBUS CC comparator status flags
+      access: ReadOnly
+      address: 0x05
+      size_bits: 4
+      reset_value: 0x00
+      fields:
+        VBUSINCC1CMP:
+          base: uint
+          start: 0
+          end: 2
+          access: ReadOnly
+          description: CC1 Charger detection comparator output
+          try_conversion: crate::sysreg::VbusInCcCmp
+        VBUSINCC2CMP:
+          base: uint
+          start: 2
+          end: 4
+          access: ReadOnly
+          description: CC2 Charger detection comparator output
+          try_conversion: crate::sysreg::VbusInCcCmp
+    VBUSINSTATUS:
+      type: register
+      description: VBUS status flags
+      access: ReadOnly
+      address: 0x07
+      size_bits: 6
+      reset_value: 0x00
+      fields:
+        VBUSINPRESENT:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: VBUS detected
+        VBUSINCURRLIMACTIVE:
+          base: uint
+          start: 1
+          end: 2
+          access: ReadOnly
+          description: VBUS current limit detected
+        VBUSINOVRPROTACTIVE:
+          base: uint
+          start: 2
+          end: 3
+          access: ReadOnly
+          description: VBUS over-voltage protection detected
+        VBUSINUNDERVOLTAGE:
+          base: uint
+          start: 3
+          end: 4
+          access: ReadOnly
+          description: VBUS under-voltage detected
+        VBUSINSUSPENDMODEACTIVE:
+          base: uint
+          start: 4
+          end: 5
+          access: ReadOnly
+          description: VBUS suspend mode active
+        VBUSINVBUSOUTACTIVE:
+          base: uint
+          start: 5
+          end: 6
+          access: ReadOnly
+          description: VBUS out active
+
 CHARGER:
   type: block
   description: CHARGER registers

@@ -19,7 +19,7 @@ This crate provides both low-level register access and a high-level API for mana
 
 | **Component**                             | **Low-Level API** | **High-Level API** |
 | ----------------------------------------- | :---------------: | :----------------: |
-| SYSREG — System regulator                 |        ❌         |         ❌         |
+| SYSREG — System regulator                 |        ✅         |         ✅         |
 | CHARGER — Battery charger                 |        ✅         |         ✅         |
 | BUCK — Buck regulators                    |        ✅         |         ✅         |
 | LOADSW/LDO — Load switches/LDO regulators |        ❌         |         ❌         |

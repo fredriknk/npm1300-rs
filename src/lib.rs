@@ -8,6 +8,7 @@ pub mod buck;
 pub mod charger;
 pub mod gpios;
 pub mod leds;
+pub mod sysreg;
 
 const ADDR: u8 = 0x6B;
 
