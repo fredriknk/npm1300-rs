@@ -24,6 +24,8 @@ pub enum NPM1300Error<I2cError> {
     InvalidNtcThreshold,
     #[error("invalid die temperature stop/resume threshold")]
     InvalidDieTemperatureThreshold,
+    #[error("invalid NTC beta")]
+    InvalidNtcBeta,
 }
 
 #[derive(Debug)]
@@ -34,6 +36,7 @@ pub struct DeviceInterface<I2c: embedded_hal_async::i2c::I2c> {
 pub struct NPM1300<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs> {
     device: Device<DeviceInterface<I2c>>,
     delay: Delay,
+    ntc_beta: Option<f32>,
 }
 
 impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs>
@@ -43,6 +46,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         Self {
             device: Device::new(DeviceInterface { i2c }),
             delay,
+            ntc_beta: None,
         }
     }
 }

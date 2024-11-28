@@ -73,11 +73,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
     /// * `Ok(f32)` - The measured NTC resistance in degrees Celsius
     /// * `Err(NPM1300Error)` - An error occurred while reading the NTC measurement result
     //TODO: test this function
-    pub async fn measure_ntc(
-        &mut self,
-        ntc_beta: f32,
-        // ) -> Result<f32, crate::NPM1300Error<I2c::Error>> {
-    ) -> Result<f32, crate::NPM1300Error<I2c::Error>> {
+    pub async fn measure_ntc(&mut self) -> Result<f32, crate::NPM1300Error<I2c::Error>> {
         #[cfg(feature = "defmt-03")]
         defmt::debug!("Triggering NTC measurement...");
         self.device
@@ -110,9 +106,13 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         let result = ((msb as u16) << 2) | (lsb & 0x03) as u16;
         // Convert result to f32
         // The temperature is returned in degrees Celsius
-        let result = 1.0
-            / ((1.0 / 298.15) - (1.0 / ntc_beta) * logf((1024.0 / result as f32) - 1.0))
-            - 273.15;
+        //
+        let result = if let Some(ntc_beta) = self.ntc_beta {
+            1.0 / ((1.0 / 298.15) - (1.0 / ntc_beta) * logf((1024.0 / result as f32) - 1.0))
+                - 273.15
+        } else {
+            return Err(crate::NPM1300Error::InvalidNtcBeta);
+        };
         Ok(result)
     }
 
@@ -247,12 +247,21 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
     pub async fn configure_ntc_resistance(
         &mut self,
         ntc_resistance: NtcThermistorType,
+        ntc_beta: Option<f32>,
     ) -> Result<(), crate::NPM1300Error<I2c::Error>> {
         // Write NTC value to register
         self.device
             .adc()
             .adcntcrsel()
             .write_async(|reg| reg.set_adcntcrsel(ntc_resistance))
-            .await
+            .await?;
+        if ntc_resistance != NtcThermistorType::None {
+            // Add a check to ensure the NTC beta is not None
+            if ntc_beta.is_none() {
+                return Err(crate::NPM1300Error::InvalidNtcBeta);
+            }
+            self.ntc_beta = ntc_beta;
+        }
+        Ok(())
     }
 }
