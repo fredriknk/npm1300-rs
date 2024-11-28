@@ -1749,3 +1749,96 @@ ADC:
           start: 0
           end: 1
           description: Enable auto IBAT measurement after VBAT task
+
+POF:
+  type: block
+  description: Power-fail comparator registers
+  address_offset: 0x0900
+  objects:
+    POFCONFIG:
+      type: register
+      description: Power-fail detection configuration
+      address: 0x0
+      size_bits: 6
+      fields:
+        POFENA:
+          base: uint
+          start: 0
+          end: 1
+          description: Enable power-failure detection
+          conversion:
+            name: POFENA
+            OFF:
+              value: default
+              description: Disable power-failure detection
+            ENABLED:
+              value: 1
+              description: Enable power-failure detection
+        POFWARNPOLARITY:
+          base: uint
+          start: 1
+          end: 2
+          description: Power-failure warning GPIO polarity
+          conversion:
+            name: POFWARNPOLARITY
+            Low:
+              value: default
+              description: Active low
+            High:
+              value: 1
+              description: Active high
+        POFVSYSTHRESHSEL:
+          base: uint
+          start: 2
+          end: 6
+          description: VSYS comparator threshold
+          conversion:
+            name: VsysThreshold
+            V2_8:
+              value: default
+              description: 2.8V
+            V2_6:
+              value: 1
+              description: 2.6V
+            V2_7:
+              value: 2
+              description: 2.7V
+            V2_9:
+              value: 3
+              description: 2.9V
+            V3_0:
+              value: 4
+              description: 3.0V
+            V3_1:
+              value: 5
+              description: 3.1V
+            V3_2:
+              value: 6
+              description: 3.2V
+            V3_3:
+              value: 7
+              description: 3.3V
+            V3_4:
+              value: 8
+              description: 3.4V
+            V3_5:
+              value: 9
+              description: 3.5V
+            UNUSED10:
+              value: 10
+              description: 2.8V
+            UNUSED11:
+              value: 11
+              description: 2.8V
+            UNUSED12:
+              value: 12
+              description: 2.8V
+            UNUSED13:
+              value: 13
+              description: 2.8V
+            UNUSED14:
+              value: 14
+              description: 2.8V
+            UNUSED15:
+              value: 15
+              description: 2.8V

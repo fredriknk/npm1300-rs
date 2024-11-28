@@ -9,6 +9,7 @@ pub mod buck;
 pub mod charger;
 pub mod gpios;
 pub mod leds;
+pub mod pof;
 pub mod sysreg;
 
 const ADDR: u8 = 0x6B;
@@ -30,6 +31,8 @@ pub enum NPM1300Error<I2cError> {
         "invalid VBAT measurement delay value, it must be between 4 and 514 and a multiple of 2"
     )]
     InvalidVbatMeasurementDelayValue,
+    #[error("invalid VSYS threshold")]
+    InvalidPofVsysThreshold,
 }
 
 #[derive(Debug)]
