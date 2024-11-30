@@ -1,8 +1,10 @@
 use crate::{
     common::Task,
+    field_sets::Buckstatus,
+    field_sets::Buckvoutstatus,
     gpios::{Gpio, GpioMode, GpioPolarity},
     Buck1Autoctrlsel, Buck1Enpulldown, Buck1Swctrlsel, Buck2Autoctrlsel, Buck2Enpulldown,
-    Buck2Swctrlsel, Buckstatus, Buckvoutstatus,
+    Buck2Swctrlsel,
 };
 
 mod types;
