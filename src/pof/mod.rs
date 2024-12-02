@@ -15,7 +15,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .pof()
             .pofconfig()
-            .write_async(|reg| reg.set_pofena(if enable { Pofena::Enabled } else { Pofena::Off }))
+            .modify_async(|reg| reg.set_pofena(if enable { Pofena::Enabled } else { Pofena::Off }))
             .await
     }
 
@@ -38,7 +38,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .pof()
             .pofconfig()
-            .write_async(|reg| reg.set_pofwarnpolarity(polarity))
+            .modify_async(|reg| reg.set_pofwarnpolarity(polarity))
             .await
     }
 
@@ -116,7 +116,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .pof()
             .pofconfig()
-            .write_async(|reg| reg.set_pofvsysthreshsel(threshold))
+            .modify_async(|reg| reg.set_pofvsysthreshsel(threshold))
             .await
     }
 

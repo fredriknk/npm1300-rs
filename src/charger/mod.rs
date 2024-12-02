@@ -64,7 +64,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgenableset()
-            .write_async(|reg| reg.set_enablecharging(ChargerEnableSet::EnableCharger))
+            .modify_async(|reg| reg.set_enablecharging(ChargerEnableSet::EnableCharger))
             .await
     }
 
@@ -76,7 +76,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgenableclr()
-            .write_async(|reg| reg.set_enablecharging(ChargerEnableClear::DisableCharger))
+            .modify_async(|reg| reg.set_enablecharging(ChargerEnableClear::DisableCharger))
             .await
     }
 
@@ -103,7 +103,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgenableset()
-            .write_async(|reg| {
+            .modify_async(|reg| {
                 reg.set_enablefullchgcool(
                     ChargerEnableFullCurrentChargeInCoolTempSet::EnableFullCurrentChargeInCoolTemp,
                 )
@@ -120,7 +120,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgenableclr()
-            .write_async(|reg| {
+            .modify_async(|reg| {
                 reg.set_enablefullchgcool(
                     ChargerEnableFullCurrentChargeInCoolTempClear::DisableFullCurrentChargeInCoolTemp,
                 )
@@ -151,7 +151,9 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgdisableclr()
-            .write_async(|reg| reg.set_disablerecharge(ChargerDisableRechargeClear::EnableRecharge))
+            .modify_async(|reg| {
+                reg.set_disablerecharge(ChargerDisableRechargeClear::EnableRecharge)
+            })
             .await
     }
 
@@ -162,7 +164,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgdisableset()
-            .write_async(|reg| reg.set_disablerecharge(ChargerDisableRechargeSet::DisableRecharge))
+            .modify_async(|reg| reg.set_disablerecharge(ChargerDisableRechargeSet::DisableRecharge))
             .await
     }
 
@@ -187,7 +189,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgdisableset()
-            .write_async(|reg| reg.set_disablentc(DisableNtcSet::IgnoreNtc))
+            .modify_async(|reg| reg.set_disablentc(DisableNtcSet::IgnoreNtc))
             .await
     }
 
@@ -196,7 +198,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .charger()
             .bchgdisableclr()
-            .write_async(|reg| reg.set_disablentc(DisableNtcClear::UseNtc))
+            .modify_async(|reg| reg.set_disablentc(DisableNtcClear::UseNtc))
             .await
     }
 

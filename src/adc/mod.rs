@@ -498,7 +498,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .adc()
             .adcconfig()
-            .write_async(|reg| {
+            .modify_async(|reg| {
                 reg.set_vbatautoenable(if enable {
                     Vbatautoenable::Autoenable
                 } else {
@@ -538,7 +538,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .adc()
             .adcconfig()
-            .write_async(|reg| {
+            .modify_async(|reg| {
                 reg.set_vbatburstenable(if enable {
                     Vbatburstenable::Burstmode
                 } else {
@@ -623,7 +623,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .adc()
             .adcautotimconf()
-            .write_async(|reg| reg.set_ntcautotim(ntc_auto_measurement_interval))
+            .modify_async(|reg| reg.set_ntcautotim(ntc_auto_measurement_interval))
             .await?;
 
         // Update toggle register
@@ -664,7 +664,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .adc()
             .adcautotimconf()
-            .write_async(|reg| reg.set_tempautotim(die_temperature_auto_measurement_interval))
+            .modify_async(|reg| reg.set_tempautotim(die_temperature_auto_measurement_interval))
             .await?;
 
         // Update toggle register

@@ -162,7 +162,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckswctrlsel()
-            .write_async(|reg| reg.set_buck_1_swctrlsel(Buck1Swctrlsel::Swctrl))
+            .modify_async(|reg| reg.set_buck_1_swctrlsel(Buck1Swctrlsel::Swctrl))
             .await
     }
 
@@ -173,7 +173,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckswctrlsel()
-            .write_async(|reg| reg.set_buck_1_swctrlsel(Buck1Swctrlsel::Vsetandswctrl))
+            .modify_async(|reg| reg.set_buck_1_swctrlsel(Buck1Swctrlsel::Vsetandswctrl))
             .await
     }
 
@@ -184,7 +184,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckswctrlsel()
-            .write_async(|reg| reg.set_buck_2_swctrlsel(Buck2Swctrlsel::Vsetandswctrl))
+            .modify_async(|reg| reg.set_buck_2_swctrlsel(Buck2Swctrlsel::Vsetandswctrl))
             .await
     }
 
@@ -203,7 +203,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckswctrlsel()
-            .write_async(|reg| reg.set_buck_2_swctrlsel(Buck2Swctrlsel::Swctrl))
+            .modify_async(|reg| reg.set_buck_2_swctrlsel(Buck2Swctrlsel::Swctrl))
             .await
     }
 
@@ -266,7 +266,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckswctrlsel()
-            .write_async(|reg| match buck_index {
+            .modify_async(|reg| match buck_index {
                 1 => reg.set_buck_1_swctrlsel(Buck1Swctrlsel::Swctrl),
                 2 => reg.set_buck_2_swctrlsel(Buck2Swctrlsel::Swctrl),
                 _ => panic!("Invalid BUCK index"),
@@ -313,7 +313,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckvretctrl()
-            .write_async(|reg| reg.set_buck_1_vretgpisel(Gpio::None))
+            .modify_async(|reg| reg.set_buck_1_vretgpisel(Gpio::None))
             .await
     }
 
@@ -322,7 +322,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckvretctrl()
-            .write_async(|reg| reg.set_buck_2_vretgpisel(Gpio::None))
+            .modify_async(|reg| reg.set_buck_2_vretgpisel(Gpio::None))
             .await
     }
 
@@ -350,7 +350,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
             self.device
                 .buck()
                 .buckenctrl()
-                .write_async(|reg| match buck_index {
+                .modify_async(|reg| match buck_index {
                     1 => {
                         reg.set_buck_1_engpisel(gpio);
                         reg.set_buck_1_engpiinv(polarity);
@@ -418,7 +418,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
             self.device
                 .buck()
                 .buckpwmctrl()
-                .write_async(|reg| match buck_index {
+                .modify_async(|reg| match buck_index {
                     1 => {
                         reg.set_buck_1_pwmgpisel(gpio);
                         reg.set_buck_1_pwmgpiinv(polarity);
@@ -499,7 +499,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckctrl_0()
-            .write_async(|reg| reg.set_buck_1_autoctrlsel(mode))
+            .modify_async(|reg| reg.set_buck_1_autoctrlsel(mode))
             .await
     }
 
@@ -514,7 +514,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckctrl_0()
-            .write_async(|reg| reg.set_buck_2_autoctrlsel(mode))
+            .modify_async(|reg| reg.set_buck_2_autoctrlsel(mode))
             .await
     }
 
@@ -523,7 +523,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckctrl_0()
-            .write_async(|reg| reg.set_buck_1_enpulldown(Buck1Enpulldown::High))
+            .modify_async(|reg| reg.set_buck_1_enpulldown(Buck1Enpulldown::High))
             .await
     }
 
@@ -532,7 +532,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckctrl_0()
-            .write_async(|reg| reg.set_buck_1_enpulldown(Buck1Enpulldown::Low))
+            .modify_async(|reg| reg.set_buck_1_enpulldown(Buck1Enpulldown::Low))
             .await
     }
 
@@ -541,7 +541,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckctrl_0()
-            .write_async(|reg| reg.set_buck_2_enpulldown(Buck2Enpulldown::High))
+            .modify_async(|reg| reg.set_buck_2_enpulldown(Buck2Enpulldown::High))
             .await
     }
 
@@ -550,7 +550,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         self.device
             .buck()
             .buckctrl_0()
-            .write_async(|reg| reg.set_buck_2_enpulldown(Buck2Enpulldown::Low))
+            .modify_async(|reg| reg.set_buck_2_enpulldown(Buck2Enpulldown::Low))
             .await
     }
 
