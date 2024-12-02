@@ -497,6 +497,92 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         }
     }
 
+    /// Get the configured NTC threshold
+    ///
+    /// # Arguments
+    ///
+    /// * `region` - The temperature region to get the threshold for (Cold, Cool, Warm, or Hot)
+    ///
+    /// # Returns
+    ///
+    /// * `Ok(u16)` - The NTC threshold for the specified temperature region
+    /// * `Err(NPM1300Error)` - An error occurred while reading the NTC threshold
+    pub async fn get_ntc_threshold(
+        &mut self,
+        region: NtcThresholdRegion,
+    ) -> Result<u16, crate::NPM1300Error<I2c::Error>> {
+        match region {
+            NtcThresholdRegion::Cold => {
+                let msb = self
+                    .device
+                    .charger()
+                    .ntccold()
+                    .read_async()
+                    .await?
+                    .ntccoldlvlmsb();
+                let lsb = self
+                    .device
+                    .charger()
+                    .ntccoldlsb()
+                    .read_async()
+                    .await?
+                    .ntccoldlvllsb();
+                Ok((msb as u16) << 2 | (lsb as u16))
+            }
+            NtcThresholdRegion::Cool => {
+                let msb = self
+                    .device
+                    .charger()
+                    .ntccool()
+                    .read_async()
+                    .await?
+                    .ntccoollvlmsb();
+                let lsb = self
+                    .device
+                    .charger()
+                    .ntccoollsb()
+                    .read_async()
+                    .await?
+                    .ntccoollvllsb();
+                Ok((msb as u16) << 2 | (lsb as u16))
+            }
+            NtcThresholdRegion::Warm => {
+                let msb = self
+                    .device
+                    .charger()
+                    .ntcwarm()
+                    .read_async()
+                    .await?
+                    .ntcwarmlvlmsb();
+                let lsb = self
+                    .device
+                    .charger()
+                    .ntcwarmlsb()
+                    .read_async()
+                    .await?
+                    .ntcwarmlvllsb();
+                Ok((msb as u16) << 2 | (lsb as u16))
+            }
+            NtcThresholdRegion::Hot => {
+                let msb = self
+                    .device
+                    .charger()
+                    .ntchot()
+                    .read_async()
+                    .await?
+                    .ntchotlvlmsb();
+                let lsb = self
+                    .device
+                    .charger()
+                    .ntchotlsb()
+                    .read_async()
+                    .await?
+                    .ntchotlvllsb();
+                Ok((msb as u16) << 2 | (lsb as u16))
+            }
+        }
+    }
+
     /// Set the die temperature threshold for the charger device
     ///
     /// Sets the temperature threshold based on the desired temperature in degrees Celsius.
