@@ -423,8 +423,8 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
     pub async fn set_ntc_threshold(
         &mut self,
         region: NtcThresholdRegion,
-        desired_resistance: u16,
-        reference_resistance_25c: u16,
+        desired_resistance: u32,
+        reference_resistance_25c: u32,
     ) -> Result<(), crate::NPM1300Error<I2c::Error>> {
         // Calculate the 10-bit threshold
         let threshold = roundf(
