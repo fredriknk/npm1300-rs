@@ -61,9 +61,9 @@ dependencies = [
 
 [[package]]
 name = "dd-manifest-tree"
-version = "1.0.0-rc.1"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b8ad09b1e7b0ee595dab9aa3b7fcb34f108da7d5cd96b888487a0ba05e008cae"
+checksum = "5793572036e0a6638977c7370c6afc423eac848ee8495f079b8fd3964de7b9f9"
 dependencies = [
  "yaml-rust2",
 ]
@@ -102,9 +102,9 @@ dependencies = [
 
 [[package]]
 name = "device-driver"
-version = "1.0.0-rc.1"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "781fa54c324db477a0adeffba7d296e226f532dd6f346a16c32876369a34cf7d"
+checksum = "8d66a318c4a767a431dcf65b389820b616839ebf18aa449444110ac228c59c99"
 dependencies = [
  "bitvec",
  "defmt",
@@ -115,9 +115,9 @@ dependencies = [
 
 [[package]]
 name = "device-driver-generation"
-version = "1.0.0-rc.1"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9806240818565ab50d9fe98d9ef7a4654b07fa7a117f40fcfd9e6dc13d138148"
+checksum = "301737465a8ca38ce3f2d2c2a9ee25bd3d365ef894cd96305737bbbcc991925a"
 dependencies = [
  "anyhow",
  "bitvec",
@@ -131,9 +131,9 @@ dependencies = [
 
 [[package]]
 name = "device-driver-macros"
-version = "1.0.0-rc.1"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "811c816dceeb631a6c492414adab8ba147c9abe30e767d74987af23ad16d6ba9"
+checksum = "a7c867e869c87e0d0e1b569bc9f0db257c9eb764f2838cb7f6632d9c2f891e83"
 dependencies = [
  "device-driver-generation",
  "proc-macro2",
@@ -214,9 +214,9 @@ dependencies = [
 
 [[package]]
 name = "itertools"
-version = "0.13.0"
+version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
+checksum = "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285"
 dependencies = [
  "either",
 ]
