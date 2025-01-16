@@ -1842,3 +1842,150 @@ POF:
             UNUSED15:
               value: 15
               description: 2.8V
+
+SHIP:
+  type: block
+  description: Ship and hibernate modes registers
+  address_offset: 0x0B00
+  objects:
+    TASKENTERHIBERNATE:
+      type: command
+      description: Task enter hibernate
+      address: 0x00
+      size_bits_in: 1
+      fields_in:
+        TASKENTERHIBERNATE:
+          base: uint
+          start: 0
+          end: 1
+          description: Enter hibernate (shipmode with wakeup timer)
+          try_conversion: crate::common::Task
+    TASKSHPHLDCFGSTROBE:
+      type: command
+      description: Task Ship Hold config
+      address: 0x01
+      size_bits_in: 1
+      fields_in:
+        TASKSHPHLDCONFIGSTROBE:
+          base: uint
+          start: 0
+          end: 1
+          description: Load the SHPHLD Config
+          try_conversion: crate::common::Task
+    TASKENTERSHIPMODE:
+      type: command
+      description: Task enter ship mode
+      address: 0x02
+      size_bits_in: 1
+      fields_in:
+        TASKENTERSHIPMODE:
+          base: uint
+          start: 0
+          end: 1
+          description: Enter shipmode (without wakeup timer)
+          try_conversion: crate::common::Task
+    TASKRESETCFG:
+      type: command
+      description: Request reset config
+      address: 0x03
+      size_bits_in: 1
+      fields_in:
+        TASKSHPHLDRSTCONFIG:
+          base: uint
+          start: 0
+          end: 1
+          description: Use to reset config settings
+          try_conversion: crate::common::Task
+    SHPHLDCONFIG:
+      type: register
+      description: Ship Hold button press timer config
+      address: 0x04
+      size_bits: 3
+      reset_value: 0x03
+      fields:
+        SHPHLDTIM:
+          base: uint
+          start: 0
+          end: 3
+          description: Ship-Hold press timer
+          conversion:
+            name: SHPHLDTIM
+            MS16:
+              value: 0
+              description: 16ms
+            MS32:
+              value: 1
+              description: 32ms
+            MS64:
+              value: 2
+              description: 64ms
+            MS96:
+              value: default
+              description: 96ms
+            MS304:
+              value: 4
+              description: 304ms
+            MS608:
+              value: 5
+              description: 608ms
+            MS1008:
+              value: 6
+              description: 1008ms
+            MS3008:
+              value: 7
+              description: 3008ms
+    SHPHLDSTATUS:
+      type: register
+      description: Status of the SHPHLD pin
+      access: ReadOnly
+      address: 0x05
+      size_bits: 1
+      reset_value: 0x00
+      fields:
+        SHPHLDPINSTATUS:
+          base: uint
+          start: 0
+          end: 1
+          access: ReadOnly
+          description: Ship Hold pin Status
+          conversion:
+            name: SHPHLDPINSTATUS
+            LOW:
+              value: 0
+              description: Low
+            HIGH:
+              value: 1
+              description: High
+    LPRESETCONFIG:
+      type: register
+      description: Long press reset config register
+      address: 0x06
+      size_bits: 2
+      reset_value: 0x00
+      fields:
+        LONGTIMRESETDIS:
+          base: uint
+          start: 0
+          end: 1
+          description: Long press 10s timer enable
+          conversion:
+            name: LONGTIMRESETDIS
+            ENABLED:
+              value: 0
+              description: Long press enabled
+            DISABLED:
+              value: 1
+              description: Long press disabled
+        LONGTIMTWOBUTTONSEL:
+          base: uint
+          start: 1
+          end: 2
+          description: Select one (default) or two buttons to perform long press reset
+          conversion:
+            name: LONGTIMTWOBUTTONSEL
+            SHPHLD:
+              value: 0
+              description: SHPHLD button
+            SHPHLDGPIO0:
+              value: 1
+              description: SHPHLD + GPIO0 buttons

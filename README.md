@@ -28,7 +28,7 @@ This crate provides both low-level register access and a high-level API for mana
 | ADC - System Monitor                      |        ✅         |         ⚠️         |
 | POF - Power-fail comparator               |        ✅         |         ✅         |
 | TIMER — Timer/monitor                     |        ❌         |         ❌         |
-| Ship and hibernate modes                  |        ❌         |         ❌         |
+| Ship and hibernate modes                  |        ✅         |         ✅         |
 | Event and interrupt                       |        ❌         |         ❌         |
 | Reset and error                           |        ❌         |         ❌         |
 | Fuel gauge                                |        ❌         |         ❌         |
