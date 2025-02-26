@@ -1765,7 +1765,8 @@ LDSW:
           base: uint
           start: 0
           end: 1
-          description: LDSW1_Enable request SET
+          description: LDSW1 Enable request SET
+          try_conversion: crate::common::Task
     TASKLDSW1CLR:
       type: command
       description: Disable LDSW1
@@ -1776,7 +1777,8 @@ LDSW:
           base: uint
           start: 0
           end: 1
-          description: LDSW1_Enable request CLR
+          description: LDSW1 Disable request CLR
+          try_conversion: crate::common::Task
     TASKLDSW2SET:
       type: command
       description: Enable LDSW2
@@ -1787,7 +1789,8 @@ LDSW:
           base: uint
           start: 0
           end: 1
-          description: LDSW2_Enable request SET
+          description: LDSW2 Enable request SET
+          try_conversion: crate::common::Task
     TASKLDSW2CLR:
       type: command
       description: Disable LDSW2
@@ -1798,7 +1801,8 @@ LDSW:
           base: uint
           start: 0
           end: 1
-          description: LDSW2_Enable request CLR
+          description: LDSW2 Disable request CLR
+          try_conversion: crate::common::Task
     LDSWSTATUS:
       type: register
       description: Load Switch Status
@@ -1869,6 +1873,7 @@ LDSW:
       type: register
       description: Load Switch Configuration
       address: 0x07
+      access: ReadOnly
       size_bits: 8
       reset_value: 0x00
       fields:
@@ -1876,32 +1881,38 @@ LDSW:
           base: uint
           start: 0
           end: 1
-          description: Load Switch1 Soft Start Disable (0: NOEFFECT, 1: NOSOFTSTART)
+          access: ReadOnly
+          description: Load Switch1 Soft Start Disable (0: no effect, 1: soft start disabled)
         LDSW2SOFTSTARTDISABLE:
           base: uint
           start: 1
           end: 2
-          description: Load Switch2 Soft Start Disable (0: NOEFFECT, 1: NOSOFTSTART)
+          access: ReadOnly
+          description: Load Switch2 Soft Start Disable (0: no effect, 1: soft start disabled)
         LDSW1SOFTSTARTSEL:
           base: uint
           start: 2
           end: 4
-          description: Select Soft Start level for Load Switch1 (0: 10mA, 1: 20mA, 2: 35mA, 3: 50mA)
+          access: ReadOnly
+          description: Soft Start level for Load Switch1 (0: 10mA, 1: 20mA, 2: 35mA, 3: 50mA)
         LDSW2SOFTSTARTSEL:
           base: uint
           start: 4
           end: 6
-          description: Select Soft Start level for Load Switch2 (0: 10mA, 1: 20mA, 2: 35mA, 3: 50mA)
+          access: ReadOnly
+          description: Soft Start level for Load Switch2 (0: 10mA, 1: 20mA, 2: 35mA, 3: 50mA)
         LDSW1ACTIVEDISCHARGE:
           base: uint
           start: 6
           end: 7
-          description: Load Switch1 Active Discharge Enable (0: NODISCHARGE, 1: ACTIVE)
+          access: ReadOnly
+          description: Load Switch1 Active Discharge Enable (0: no discharge, 1: active discharge enabled)
         LDSW2ACTIVEDISCHARGE:
           base: uint
           start: 7
           end: 8
-          description: Load Switch2 Active Discharge Enable (0: NODISCHARGE, 1: ACTIVE)
+          access: ReadOnly
+          description: Load Switch2 Active Discharge Enable (0: no discharge, 1: active discharge enabled)
     LDSW1LDOSEL:
       type: register
       description: Load Switch1 / LDO Select
@@ -1938,6 +1949,7 @@ LDSW:
           start: 0
           end: 8
           description: Low-dropout regulator 1 programmable output voltage (0: 1V, 1: 1V1, …, 23: 3V3)
+          try_conversion: crate::ldsw::LdoVoltage
     LDSW2VOUTSEL:
       type: register
       description: LDO2 programmable output voltage
@@ -1950,6 +1962,8 @@ LDSW:
           start: 0
           end: 8
           description: Low-dropout regulator 2 programmable output voltage (0: 1V, 1: 1V1, …, 23: 3V3)
+          try_conversion: crate::ldsw::LdoVoltage
+
 
 POF:
   type: block
