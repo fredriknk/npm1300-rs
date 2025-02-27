@@ -186,9 +186,9 @@ dependencies = [
 
 [[package]]
 name = "dd-manifest-tree"
-version = "1.0.0-rc.1"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b8ad09b1e7b0ee595dab9aa3b7fcb34f108da7d5cd96b888487a0ba05e008cae"
+checksum = "5793572036e0a6638977c7370c6afc423eac848ee8495f079b8fd3964de7b9f9"
 dependencies = [
  "yaml-rust2",
 ]
@@ -237,11 +237,10 @@ dependencies = [
 
 [[package]]
 name = "device-driver"
-version = "1.0.0-rc.1"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "781fa54c324db477a0adeffba7d296e226f532dd6f346a16c32876369a34cf7d"
+checksum = "6e6603dec2b2f66089ba94b1193547c0789cc2c94f926e67883805eaad7a5506"
 dependencies = [
- "bitvec",
  "defmt",
  "device-driver-macros",
  "embedded-io",
@@ -250,9 +249,9 @@ dependencies = [
 
 [[package]]
 name = "device-driver-generation"
-version = "1.0.0-rc.1"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9806240818565ab50d9fe98d9ef7a4654b07fa7a117f40fcfd9e6dc13d138148"
+checksum = "6a6d8e2e1b53318cd191a15934868a702ee74bd36ce8bc4892e3ccc43c2e1808"
 dependencies = [
  "anyhow",
  "bitvec",
@@ -266,9 +265,9 @@ dependencies = [
 
 [[package]]
 name = "device-driver-macros"
-version = "1.0.0-rc.1"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "811c816dceeb631a6c492414adab8ba147c9abe30e767d74987af23ad16d6ba9"
+checksum = "d39d4c689da090a038c423e6301366224ef4ae5062506c289e20203965bc2e47"
 dependencies = [
  "device-driver-generation",
  "proc-macro2",
@@ -607,9 +606,9 @@ checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
 
 [[package]]
 name = "itertools"
-version = "0.13.0"
+version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
+checksum = "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285"
 dependencies = [
  "either",
 ]
