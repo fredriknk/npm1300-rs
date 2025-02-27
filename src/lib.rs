@@ -6,6 +6,7 @@ pub mod common;
 
 pub mod adc;
 pub mod buck;
+pub mod ldsw;
 pub mod charger;
 pub mod gpios;
 pub mod leds;
