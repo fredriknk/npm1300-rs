@@ -32,8 +32,8 @@ async fn main(_spawner: Spawner) {
     let sclpin = p.P0_29;
 
     let config = twim::Config::default();
-    let mut pmic_gpio0 = Output::new(p.P0_06, Level::Low, OutputDrive::Standard);
-    let mut pmic_gpio1 = Output::new(p.P0_02, Level::High, OutputDrive::Standard);
+    let mut pmic_gpio0 = Output::new(p.P0_11, Level::Low, OutputDrive::Standard);
+    let mut pmic_gpio1 = Output::new(p.P0_12, Level::High, OutputDrive::Standard);
 
     let twi = Twim::new(p.SERIAL0, Irqs, sdapin, sclpin, config);
 
