@@ -655,7 +655,6 @@ pub enum IbatStatuscodes {
 // Add conversion from u8
 impl From<u8> for IbatStatuscodes {
     fn from(value: u8) -> Self {
-        defmt::info!("IbatStatuscodes: {:?}", value);
         match value {
             4 => Self::IbatStatDischarge,
             8 => Self::IbatStatChargeError,
