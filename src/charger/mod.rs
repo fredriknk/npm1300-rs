@@ -257,7 +257,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         // LSB = 1 if (current_ma/2) is odd, 0 if even
         let msb = (current_ma / 4) as u8;
         let lsb = ((current_ma / 2) & 1) as u8;
-
+        
         // Update MSB register
         self.device
             .charger()
@@ -279,7 +279,31 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
             Ok(())
         }
     }
+    /// Get the configured battery charger current
+    ///
+    /// * `Ok(u16)` - The configured charging current in milliamps (mA)
+    /// * `Err(NPM1300Error)` - An error occurred while reading the register values
+    pub async fn get_charger_config_current(
+        &mut self,
+    ) -> Result<u16, crate::NPM1300Error<I2c::Error>> {
+        
+        let msb = self
+            .device
+            .charger()
+            .bchgisetmsb()
+            .read_async()
+            .await?
+            .bchgisetchargemsb();
+        let lsb = self
+            .device
+            .charger()
+            .bchgisetlsb()
+            .read_async()
+            .await?
+            .bchgisetchargelsb();
 
+        Ok((msb as u16) << 2 | (lsb as u16)<<1)
+    }
     /// Set the battery discharge current limit
     ///
     /// Configures the maximum discharge current limit for the battery.
