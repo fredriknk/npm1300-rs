@@ -1692,7 +1692,7 @@ ADC:
           description: VSYS measurement result LSBs
     ADCVBATBURSTRESULTMSB:
       type: register
-      description: ADC VBAT (or VBUS) burst measurement result MSB
+      description: ADC VBAT (or VBUS) burst measurement result MSB or IBAT/vbat measurement
       access: ReadOnly
       address: 0x16
       repeat:
@@ -1708,7 +1708,7 @@ ADC:
           description: ADC VBAT (or VBUS) burst measurement result upper 8-bits
     ADCGP1RESULTLSBS:
       type: register
-      description: ADC result LSB's (VBAT burst 0, 1, 2 and 3)
+      description: ADC result LSB's (VBAT burst 0, 1, 2 and 3) or 2 IBAT/ 3 VBUS
       access: ReadOnly
       address: 0x1A
       size_bits: 8
@@ -1749,6 +1749,14 @@ ADC:
           start: 0
           end: 1
           description: Enable auto IBAT measurement after VBAT task
+          conversion:
+              name: IBATMEASENABLE
+              IBATOFF:
+                value: 0
+                description: IBAT measurement disabled
+              IBATON:
+                value: 1
+                description: IBAT measurement enabled
 
 POF:
   type: block
