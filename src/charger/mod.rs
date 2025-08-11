@@ -5,7 +5,7 @@ pub use types::*;
 
 use libm::roundf;
 
-use crate::{common::Task, Bchgilimbatactive, Dietemphigh, Ibatmeasenable,NPM1300Error};
+use crate::{common::Task, Bchgilimbatactive, Dietemphigh, NPM1300Error};
 
 impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs>
     crate::NPM1300<I2c, Delay>
