@@ -5,7 +5,7 @@ pub use types::*;
 
 use libm::roundf;
 
-use crate::{common::Task, Bchgilimbatactive, Dietemphigh, Ibatmeasenable};
+use crate::{common::Task, Bchgilimbatactive, Dietemphigh, Ibatmeasenable,NPM1300Error};
 
 impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayNs>
     crate::NPM1300<I2c, Delay>
@@ -965,7 +965,7 @@ impl<I2c: embedded_hal_async::i2c::I2c, Delay: embedded_hal_async::delay::DelayN
         match (msb, lsb) {
             (42, 0) => Ok(DischargeCurrentLimit::Low),  // 200mA case
             (207, 1) => Ok(DischargeCurrentLimit::High), // 1000mA case
-            _ => panic!("Invalid value"),
+            _ => Err(NPM1300Error::InvalidDischargeCurrentValue { msb, lsb }),
         }
     }
 }

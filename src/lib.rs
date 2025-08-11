@@ -35,6 +35,8 @@ pub enum NPM1300Error<I2cError> {
     InvalidVbatMeasurementDelayValue,
     #[error("invalid VSYS threshold")]
     InvalidPofVsysThreshold,
+    #[error("invalid discharge current value")]
+    InvalidDischargeCurrentValue { msb: u8, lsb: u8 },
 }
 
 #[derive(Debug)]
